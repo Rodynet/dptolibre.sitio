@@ -1,36 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DptoLibre | Tu Pasaporte de Inquilino</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-950 text-white font-sans antialiased">
+<!-- PASO 1: RITUAL BLINDATO (Modificado para valor inmediato) -->
+<section id="step1" class="step-container step-active text-center">
+    <div class="mb-8">
+        <svg viewBox="0 0 100 120" class="h-20 w-auto mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 18V102L50 120V0L10 18Z" fill="#0066FF" />
+            <rect x="58.5" y="0" width="5" height="120" fill="#0066FF" />
+        </svg>
+    </div>
+    
+    <!-- NUEVO: Etiqueta de valor -->
+    <div class="inline-block px-4 py-1 rounded-full bg-blue-50 text-[var(--libre-blue)] text-[10px] font-bold uppercase tracking-widest mb-4">
+        Activación 100% Gratuita
+    </div>
 
-    <header class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
-        <h1 class="text-5xl font-bold mb-6">Tu Pasaporte de Inquilino</h1>
-        <p class="text-xl text-gray-400 mb-10 max-w-2xl">Alquila más rápido, seguro y gana intereses. Tu historial es tu mayor activo.</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mb-12">
-            <div class="p-6 border border-gray-800 rounded-xl bg-gray-900">
-                <h3 class="text-emerald-400 font-bold mb-2">1. Verifica</h3>
-                <p class="text-sm">Solvencia instantánea y alquileres blindados.</p>
-            </div>
-            <div class="p-6 border border-gray-800 rounded-xl bg-gray-900">
-                <h3 class="text-emerald-400 font-bold mb-2">2. Suma Puntos</h3>
-                <p class="text-sm">Pago puntual = Beneficios y artículos exclusivos.</p>
-            </div>
-            <div class="p-6 border border-gray-800 rounded-xl bg-gray-900">
-                <h3 class="text-emerald-400 font-bold mb-2">3. Score</h3>
-                <p class="text-sm">Construye tu historial para tu futura casa.</p>
-            </div>
-        </div>
-
-        <button class="bg-emerald-600 hover:bg-emerald-500 px-10 py-4 rounded-full font-bold text-lg transition">
-            Comenzar Mi Verificación
-        </button>
-    </header>
-
-</body>
-</html>
+    <h1 class="text-3xl font-bold mb-4">Tu Pasaporte dpto libre</h1>
+    <p class="max-w-xs opacity-60 mb-8 text-sm">Alquila rápido, ahorra en intereses y acumula puntos para tu futura casa.</p>
+    
+    <div class="w-full glass-card p-6 mb-8 border border-blue-100 text-left">
+        <h4 class="font-bold text-sm mb-2">¿Por qué activar?</h4>
+        <ul class="text-[12px] opacity-70 space-y-2">
+            <li>✅ 0% Costo de activación.</li>
+            <li>✅ Genera intereses con tu alquiler blindado.</li>
+            <li>✅ Historial verificado para tu próxima vivienda.</li>
+        </ul>
+    </div>
+    
+    <button onclick="nextStep(2)" class="btn-threshold w-full">Comenzar Mi Pasaporte</button>
+</section>
