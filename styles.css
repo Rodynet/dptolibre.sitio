@@ -9,7 +9,7 @@ html, body { margin: 0; background: #f7f9ff; font-family: Inter, system-ui, -app
 
 /* Menú Superior */
 .top-cta { left: 78.2%; top: 1.2%; width: 17.2%; height: 2.2%; }
-.menu-preguntas { left: 66%; top: 1.2%; width: 8%; height: 2.2%; } /* Ajuste aproximado para "Preguntas" */
+.menu-preguntas { position: absolute; z-index: 20; left: 66%; top: 1.2%; width: 8%; height: 2.2%; }
 
 /* CTAs de Funnel */
 .hero-cta { left: 5.1%; top: 26.9%; width: 25.5%; height: 2.6%; }
