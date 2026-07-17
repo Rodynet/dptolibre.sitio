@@ -194,14 +194,8 @@
         <div class="p-6 space-y-6 flex-grow overflow-y-auto custom-scrollbar">
             <!-- Contenedor del Enlace Interactivo / Prototipo -->
             <div id="drawer-link-container" class="hidden">
-                <h4 class="text-xs font-extrabold text-indigo-400 uppercase tracking-wider mb-2">Propuesta de Solución Interactiva</h4>
-                <a id="drawer-link-btn" href="#" target="_blank" class="flex items-center justify-between bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 active:bg-indigo-200 transition duration-150 rounded-xl p-4 text-indigo-900 shadow-sm font-extrabold text-xs">
-                    <span class="flex items-center gap-2">
-                        <span class="text-lg">📱</span>
-                        <span id="drawer-link-label">Abrir Prototipo Funcional de App</span>
-                    </span>
-                    <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </a>
+                <h4 class="text-xs font-extrabold text-indigo-400 uppercase tracking-wider mb-2">Propuestas de Solución Interactiva</h4>
+                <div id="drawer-links-wrapper" class="flex flex-col gap-2"></div>
             </div>
             <div>
                 <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Descripción del Hito</h4>
@@ -241,9 +235,31 @@
         const journeyData = {
             tenant: {
                 stages: [
-                    { id: 1, title: "Pasaporte", subtitle: "Alta e Identidad", link: "https://rodynet.github.io/dptolibre.pasaporte/v54.6.html", linkLabel: "App Inquilino: Alta y Pasaporte" },
-                    { id: 2, title: "Contrato", subtitle: "Garantías y Firma", link: "https://rodynet.github.io/dptolibre.pasaporte/v3.html", linkLabel: "App Inquilino: Contrato y Firma" },
-                    { id: 3, title: "Uso Mensual", subtitle: "Operación y Ahorro", link: "https://rodynet.github.io/dptolibre.inquilino/v81.html", linkLabel: "App Inquilino: Inicio" },
+                    { 
+                        id: 1, 
+                        title: "Pasaporte", 
+                        subtitle: "Alta e Identidad", 
+                        links: [
+                            { url: "https://rodynet.github.io/dptolibre.pasaporte/v54.6.html", label: "App: Alta y Pasaporte" },
+                            { url: "https://rodynet.github.io/dptolibre.web/alta.v1.html", label: "Web: Alta de Cuenta" }
+                        ] 
+                    },
+                    { 
+                        id: 2, 
+                        title: "Contrato", 
+                        subtitle: "Garantías y Firma", 
+                        links: [
+                            { url: "https://rodynet.github.io/dptolibre.pasaporte/v3.html", label: "App: Contrato y Firma" }
+                        ] 
+                    },
+                    { 
+                        id: 3, 
+                        title: "Uso Mensual", 
+                        subtitle: "Operación y Ahorro", 
+                        links: [
+                            { url: "https://rodynet.github.io/dptolibre.inquilino/v81.html", label: "App: Inicio" }
+                        ] 
+                    },
                     { id: 4, title: "Fidelización", subtitle: "Millas y Premios" },
                     { id: 5, title: "Re-ciclo", subtitle: "Renovación o Egreso" }
                 ],
@@ -740,12 +756,15 @@
                 </div>
             `;
             data.stages.forEach(stage => {
-                const linkHtml = stage.link ? `
-                    <a href="${stage.link}" target="_blank" class="mt-2 inline-flex items-center justify-center gap-1 w-full bg-white/10 hover:bg-white/20 active:bg-white/30 text-white font-extrabold text-[9px] py-1 px-1.5 rounded-md transition duration-150 border border-white/20 shadow-sm" onclick="event.stopPropagation();">
-                        <span>📱 Abrir Prototipo</span>
-                        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                    </a>
-                ` : '';
+                let linksHtml = '';
+                if (stage.links && stage.links.length > 0) {
+                    linksHtml = stage.links.map(lnk => `
+                        <a href="${lnk.url}" target="_blank" class="mt-1 inline-flex items-center justify-center gap-1 w-full bg-white/10 hover:bg-white/20 active:bg-white/30 text-white font-extrabold text-[9px] py-1 px-1.5 rounded-md transition duration-150 border border-white/20 shadow-sm" onclick="event.stopPropagation();">
+                            <span>${lnk.label.includes('Web') ? '🌐' : '📱'} ${lnk.label}</span>
+                            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        </a>
+                    `).join('');
+                }
                 stagesHeader.innerHTML += `
                     <div class="bg-indigo-600 text-white rounded-xl p-3 text-center shadow-md flex flex-col justify-between items-center min-h-[110px]">
                         <div class="w-full">
@@ -753,7 +772,9 @@
                             <h3 class="text-sm font-extrabold truncate" title="${stage.title}">${stage.title}</h3>
                             <p class="text-[10px] text-indigo-100 truncate" title="${stage.subtitle}">${stage.subtitle}</p>
                         </div>
-                        ${linkHtml}
+                        <div class="w-full flex flex-col gap-1">
+                            ${linksHtml}
+                        </div>
                     </div>
                 `;
             });
@@ -872,15 +893,22 @@
             const dbSpec = document.getElementById('drawer-db');
 
             const linkContainer = document.getElementById('drawer-link-container');
-            const linkBtn = document.getElementById('drawer-link-btn');
-            const linkLabel = document.getElementById('drawer-link-label');
+            const linksWrapper = document.getElementById('drawer-links-wrapper');
             
-            if (stage && stage.link) {
+            if (stage && stage.links && stage.links.length > 0) {
                 linkContainer.classList.remove('hidden');
-                linkBtn.href = stage.link;
-                linkLabel.innerText = stage.linkLabel || "Abrir Prototipo Funcional de App";
+                linksWrapper.innerHTML = stage.links.map(lnk => `
+                    <a href="${lnk.url}" target="_blank" class="flex items-center justify-between bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 active:bg-indigo-200 transition duration-150 rounded-xl p-3 text-indigo-900 shadow-sm font-extrabold text-xs">
+                        <span class="flex items-center gap-2">
+                            <span class="text-base">${lnk.label.includes('Web') ? '🌐' : '📱'}</span>
+                            <span>${lnk.label}</span>
+                        </span>
+                        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                `).join('');
             } else {
                 linkContainer.classList.add('hidden');
+                linksWrapper.innerHTML = '';
             }
 
             // Setear el badge según la fila seleccionada
