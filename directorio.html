@@ -1,10 +1,572 @@
-<p class="support-text">
-  Si tienes alguna duda, consulta nuestras 
-  <a href="https://rodynet.github.io/dptolibre.web/alta.v1.html">preguntas</a> 
-  frecuentes.
-</p>
-<p class="support-text">  
-  Si tienes alguna duda, debes ir a 
-  <a href="https://github.com/Rodynet/dptolibre.web/blob/main/admin.torre.v1.html">RESPUESTAS</a> 
-  frecuentes.
-</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DptoLibre - Customer Journey Canvas</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for modern tech & handwritten details -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        hand: ['Shadows Into Light', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .post-it {
+            transition: all 0.2s ease-in-out;
+        }
+        .post-it:hover {
+            transform: translateY(-4px) rotate(1deg);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-[#f8fafc] text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-indigo-200">
+                    D
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight text-slate-900">DptoLibre <span class="text-indigo-600">Journey Canvas</span></h1>
+                    <p class="text-xs text-slate-500 font-medium">Bajo especificaciones de "Captura de pantalla 2026-07-17 a la(s) 15.02.22.jpg"</p>
+                </div>
+            </div>
+            
+            <!-- Selector de Roles -->
+            <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 self-start md:self-auto">
+                <button onclick="switchRole('tenant')" id="btn-tenant" class="role-btn px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 bg-white text-slate-900 shadow-sm">
+                    👤 Inquilino
+                </button>
+                <button onclick="switchRole('owner')" id="btn-owner" class="role-btn px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 text-slate-600 hover:text-slate-900">
+                    🏠 Propietario
+                </button>
+                <button onclick="switchRole('admin')" id="btn-admin" class="role-btn px-4 py-2 rounded-lg text-sm font-bold transition-all duration-200 text-slate-600 hover:text-slate-900">
+                    💼 Administrador
+                </button>
+            </div>
+
+            <!-- Selector de Vista (Visual Canvas vs Dev Matrix) -->
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-slate-400">VISTA:</span>
+                <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-white shadow-sm">
+                    <button onclick="switchView('canvas')" id="btn-view-canvas" class="px-3 py-1.5 rounded-md text-xs font-bold bg-indigo-50 text-indigo-700">
+                        🎨 Canvas
+                    </button>
+                    <button onclick="switchView('dev')" id="btn-view-dev" class="px-3 py-1.5 rounded-md text-xs font-bold text-slate-600 hover:text-slate-900">
+                        💻 Dev Spec
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-grow p-6 max-w-7xl mx-auto w-full">
+        
+        <!-- Alerta Contexto Metodológico -->
+        <div class="mb-6 bg-indigo-50 border border-indigo-100 rounded-xl p-4 flex items-start gap-3">
+            <span class="text-xl">💡</span>
+            <div>
+                <h4 class="text-sm font-bold text-indigo-900">Mapeo del Triángulo Operativo (DptoLibre)</h4>
+                <p class="text-xs text-indigo-700 leading-relaxed">
+                    Este canvas interactivo emula la pizarra del negocio. Selecciona cualquiera de las pestañas superiores para auditar el recorrido, los picos emocionales de las sensaciones y haz clic sobre cualquier tarjeta para ver la especificación de API / Base de datos correspondiente.
+                </p>
+            </div>
+        </div>
+
+        <!-- CANVAS VIEW -->
+        <div id="canvas-view" class="space-y-6">
+            
+            <!-- Canvas Grid Scroll Container -->
+            <div class="overflow-x-auto pb-4 custom-scrollbar">
+                <div class="min-w-[1100px] bg-white border border-slate-200 rounded-2xl shadow-sm p-6 space-y-4">
+                    
+                    <!-- Row Headers / Grid Layout -->
+                    <div id="canvas-grid" class="grid grid-cols-6 gap-4">
+                        <!-- Left Column (Dimensions Label) -->
+                        <div class="col-span-1 flex flex-col justify-center border-r border-slate-100 pr-4">
+                            <span class="text-xs font-extrabold tracking-wider text-slate-400 uppercase">Dimensiones</span>
+                        </div>
+                        
+                        <!-- Columns Header (Etapas) -->
+                        <div class="col-span-5 grid grid-cols-5 gap-4" id="stages-header">
+                            <!-- JS populated stages -->
+                        </div>
+
+                        <!-- Row Separator -->
+                        <div class="col-span-6 border-b border-slate-100 my-2"></div>
+
+                        <!-- Row: Necesidades -->
+                        <div class="col-span-1 font-bold text-sm text-slate-500 flex items-center">
+                            🎯 Necesidades
+                        </div>
+                        <div class="col-span-5 grid grid-cols-5 gap-4" id="row-needs"></div>
+
+                        <!-- Row: Actividades -->
+                        <div class="col-span-1 font-bold text-sm text-slate-500 flex items-center">
+                            ⚡ Actividades
+                        </div>
+                        <div class="col-span-5 grid grid-cols-5 gap-4" id="row-activities"></div>
+
+                        <!-- Row: Artefactos -->
+                        <div class="col-span-1 font-bold text-sm text-slate-500 flex items-center">
+                            ⚙️ Artefactos
+                        </div>
+                        <div class="col-span-5 grid grid-cols-5 gap-4" id="row-artifacts"></div>
+
+                        <!-- Row: Sensaciones -->
+                        <div class="col-span-1 font-bold text-sm text-slate-500 flex items-center">
+                            📈 Sensaciones
+                        </div>
+                        <div class="col-span-5 grid grid-cols-5 gap-4 relative h-28" id="row-sensations">
+                            <!-- SVG Emotion Chart will overlays this row -->
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" id="emotion-line-svg">
+                                <path d="" fill="none" stroke="#6366f1" stroke-width="3" stroke-dasharray="4 2" class="opacity-30" />
+                                <path d="" fill="none" stroke="#4f46e5" stroke-width="3" id="emotion-line" />
+                            </svg>
+                            <div class="grid grid-cols-5 gap-4 w-full h-full absolute inset-0 z-20" id="row-sensations-dots">
+                                <!-- Dots with Tooltips will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Row Separator -->
+                        <div class="col-span-6 border-b border-slate-100 my-2"></div>
+
+                        <!-- Row: Oportunidades -->
+                        <div class="col-span-1 font-bold text-sm text-slate-500 flex items-center">
+                            🚀 Oportunidades
+                        </div>
+                        <div class="col-span-5 grid grid-cols-5 gap-4" id="row-opportunities"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEV MATRIX VIEW (Hidden by default) -->
+        <div id="dev-view" class="hidden space-y-6">
+            <div class="bg-slate-900 text-slate-100 rounded-2xl shadow-xl p-6 border border-slate-800 font-mono">
+                <div class="flex justify-between items-center pb-4 border-b border-slate-800 mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="h-3 w-3 rounded-full bg-red-500"></span>
+                        <span class="h-3 w-3 rounded-full bg-yellow-500"></span>
+                        <span class="h-3 w-3 rounded-full bg-green-500"></span>
+                        <span class="text-xs text-slate-400 ml-2">dptolibre-core-fsm.json</span>
+                    </div>
+                    <span class="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded">REST API Schema</span>
+                </div>
+                <pre class="text-xs md:text-sm overflow-x-auto custom-scrollbar text-emerald-400" id="json-code-display">
+                    <!-- Loaded dynamically via JS -->
+                </pre>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Side/Bottom Detail Drawer for Post-its Click -->
+    <div id="drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl border-l border-slate-200 transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col">
+        <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+            <div>
+                <span id="drawer-badge" class="text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide"></span>
+                <h3 id="drawer-title" class="text-lg font-extrabold text-slate-900 mt-2">Detalle de Tarjeta</h3>
+            </div>
+            <button onclick="closeDrawer()" class="text-slate-400 hover:text-slate-600 text-xl font-bold p-2 hover:bg-slate-100 rounded-lg">✕</button>
+        </div>
+        <div class="p-6 space-y-6 flex-grow overflow-y-auto custom-scrollbar">
+            <div>
+                <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Descripción del Hito</h4>
+                <p id="drawer-desc" class="text-sm text-slate-600 leading-relaxed"></p>
+            </div>
+            
+            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4">
+                <h4 class="text-xs font-extrabold text-indigo-900 uppercase tracking-wider mb-2">Lógica de Backend Atómica</h4>
+                <p id="drawer-logic" class="text-xs text-indigo-700 leading-relaxed"></p>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Endpoint API Correspondiente</h4>
+                <div class="flex items-center gap-2 font-mono text-xs bg-slate-100 p-2.5 rounded-lg border border-slate-200">
+                    <span id="drawer-method" class="px-2 py-0.5 rounded text-white font-extrabold"></span>
+                    <span id="drawer-path" class="text-slate-700 overflow-x-auto"></span>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Efecto Colateral en DB (FSM)</h4>
+                <div class="bg-slate-900 text-slate-100 font-mono text-xs p-3 rounded-lg overflow-x-auto">
+                    <pre id="drawer-db" class="text-amber-400"></pre>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 bg-slate-50 border-t border-slate-100">
+            <button onclick="closeDrawer()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl transition text-sm">Entendido</button>
+        </div>
+    </div>
+
+    <!-- Data Object containing Journeys -->
+    <script>
+        const journeyData = {
+            tenant: {
+                stages: [
+                    { id: 1, title: "Pasaporte", subtitle: "Alta e Identidad" },
+                    { id: 2, title: "Contrato", subtitle: "Garantías y Firma" },
+                    { id: 3, title: "Uso Mensual", subtitle: "Operación y Ahorro" },
+                    { id: 4, title: "Fidelización", subtitle: "Millas y Premios" },
+                    { id: 5, title: "Re-ciclo", subtitle: "Renovación o Egreso" }
+                ],
+                needs: [
+                    { content: "Crear cuenta rápido y validar identidad sin gestiones físicas.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Encontrar garantía económica y firmar contrato de forma digital.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Pagar alquiler fácil, reportar incidentes y obtener rendimiento de ahorros.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Sentir que el costo mensual se capitaliza en metros cuadrados reales.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Prórroga transparente o transición guiada hacia la compra del inmueble.", color: "bg-amber-100 text-amber-800 border-amber-200" }
+                ],
+                activities: [
+                    { content: "- Carga biométrica y DNI.\n- Generación de Pasaporte.\n- Enlace desde invitación.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Simulación de seguro de caución.\n- Firma con OTP/Firma Digital.\n- Carga de cuenta bancaria.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Pago automático o manual.\n- Registro fotográfico de reclamos.\n- Envío de excedente a parking.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Consulta de saldo de metros.\n- Solicitud de canjes.\n- Pre-aprobación de hipoteca.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Firma de renovación online.\n- Programar inspección final.\n- Transición a nuevo inmueble.", color: "bg-sky-100 text-sky-800 border-sky-200" }
+                ],
+                artifacts: [
+                    { content: "SDK de Biometría, Endpoint de Scoring Pasaporte.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/tenant/passport", logic: "Inicializa el perfil financiero en estado PENDING y dispara validación biométrica de terceros.", db: "tenant.passport_status = 'PENDING'\ntenant.score = 100" },
+                    { content: "E-Sign API, Motor de Emisión de Póliza Digital.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/tenant/contracts/sign", logic: "Genera hash criptográfico del PDF y conecta con la aseguradora de caución.", db: "contract.status = 'SIGNED'\ntenant.state = 'CONTRACT_REVIEW'" },
+                    { content: "Billetera Remunerada (FCI), Dashboard de Reclamos.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/tenant/pay-rent", logic: "Calcula dispersión: fee de administración, neto dueño y fondo de ahorro con interés compuesto.", db: "tenant.escrow_balance += saving_amount\ntenant.state = 'ACTIVE'" },
+                    { content: "Tokenizador de Metros Cuadrados, Motor de Scoring para Crédito.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "GET", path: "/api/v1/tenant/rewards", logic: "Convierte el 1% de los alquileres pagados en tiempo real a 'Millas de Metros' del pool de activos.", db: "tenant.accumulated_sqm_miles += computed_miles" },
+                    { content: "Smart Contract de Egreso, Módulo Checkout.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/tenant/contracts/close", logic: "Compara el inventario inicial vs final; si hay match absoluto, libera el depósito retenido de forma automatizada.", db: "contract.status = 'ARCHIVED'\ntenant.state = 'RECYCLE'" }
+                ],
+                sensations: [85, 55, 90, 98, 70], // Mood points from 0 to 100
+                opportunities: [
+                    { content: "Integración directa de pasaporte con inmobiliarias para pre-aprobar el ingreso en 2 minutos.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Financiar el costo del seguro de caución en cuotas mensuales integradas en la misma factura.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Recordatorios preventivos mediante IA en WhatsApp para evitar recargos por olvidos.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Alianzas comerciales con desarrollistas para canjear millas acumuladas por metros de pozo reales.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Ofrecer préstamos de fianza reducidos basados en el récord perfecto en el scoring acumulado.", color: "bg-pink-100 text-pink-800 border-pink-200" }
+                ]
+            },
+            owner: {
+                stages: [
+                    { id: 1, title: "Onboarding", subtitle: "Alta y Carga" },
+                    { id: 2, title: "Publicación", subtitle: "Validación de Condiciones" },
+                    { id: 3, title: "Cobro Directo", subtitle: "Rendimientos Parking" },
+                    { id: 4, title: "Seguimiento", subtitle: "Auditoría de Tickets" },
+                    { id: 5, title: "Cierre de Ciclo", subtitle: "Renovación Segura" }
+                ],
+                needs: [
+                    { content: "Acceso ágil por 3 vías (Sincronización manual, invitación o delegación de corretaje).", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Aprobar condiciones de alquiler y contrato sin firmas físicas.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Cobrar sin demoras y que el dinero ocioso genere interés compuesto antes de retirarlo.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Ver historial del inquilino y autorizar presupuestos de reparación de forma digital.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Garantizar renovación continua para evitar baches de vacancia.", color: "bg-amber-100 text-amber-800 border-amber-200" }
+                ],
+                activities: [
+                    { content: "- Selección de vía de registro.\n- Validación de titularidad catastral.\n- Asociación de DNI.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Aceptación de términos de publicación.\n- Firma biométrica de contrato.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Configuración de Cuenta de Inversión.\n- Retiro parcial o total de fondos.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Monitoreo de comportamiento de pago.\n- Autorización de reparaciones por App.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Firma de extensión contractual.\n- Aprobación de ajuste locativo anual.", color: "bg-sky-100 text-sky-800 border-sky-200" }
+                ],
+                artifacts: [
+                    { content: "API de Registro Catastral, Link QR de Asociación.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/owner/register", logic: "Crea la cuenta del propietario y asocia automáticamente propiedades listadas bajo su DNI/Tax ID.", db: "owner.status = 'ACTIVE'\nproperties.owner_id = owner.id" },
+                    { content: "Publicación Engine, Firma Digital Certificada.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/owner/properties/{id}/lease-terms", logic: "Valida las condiciones comerciales para el arrendamiento de la propiedad.", db: "property.status = 'READY_TO_LEASE'" },
+                    { content: "Billetera Remunerada de Propietarios (Money Market).", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "GET", path: "/api/v1/owner/payouts", logic: "Liquida automáticamente al propietario y transfiere excedentes al FCI de liquidez inmediata.", db: "owner.investment_account += net_rent" },
+                    { content: "Visor de Historial de Inquilino, Módulo de Aprobación de Presupuestos.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "PATCH", path: "/api/v1/owner/tickets/{id}/authorize", logic: "Actualiza el estado del ticket técnico, autoriza el cobro/descuento de la liquidación del mes.", db: "ticket.status = 'APPROVED_BY_OWNER'\npayout.pending_deductions += ticket.cost" },
+                    { content: "Alertador de Vencimiento Automatizado.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/owner/renewals", logic: "Genera la propuesta de actualización de contrato de acuerdo a índices IPC/ICL automatizados.", db: "contract.status = 'RENEWAL_PROPOSED'" }
+                ],
+                sensations: [80, 85, 95, 75, 90],
+                opportunities: [
+                    { content: "Sincronización catastral automática de propiedades usando la base de datos nacional.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Herramienta de sugerencia de precios de alquiler óptimos basados en Big Data del barrio.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Retención y capitalización inteligente del depósito de garantía en cuentas indexadas por inflación.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Ofrecer proveedores de mantenimiento calificados y certificados por DptoLibre con tarifas planas.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Adelanto financiero automático de hasta 3 meses de alquiler respaldado por el contrato activo.", color: "bg-pink-100 text-pink-800 border-pink-200" }
+                ]
+            },
+            admin: {
+                stages: [
+                    { id: 1, title: "Workspace", subtitle: "Alta y Conexión" },
+                    { id: 2, title: "Carga y Enlace", subtitle: "Cruce de Datos" },
+                    { id: 3, title: "Control Diario", subtitle: "Pagos y Mora" },
+                    { id: 4, title: "Mantenimiento", subtitle: "Asignación de Tickets" },
+                    { id: 5, title: "Negocio", subtitle: "Métricas y Escala" }
+                ],
+                needs: [
+                    { content: "Registrar la inmobiliaria o empresa administradora y vincular cuentas bancarias corporativas.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Cargar el inventario de propiedades y cruzar eficientemente dueños con inquilinos.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Automatizar la cobranza, monitorear la mora y conciliar automáticamente los pagos mensuales.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Derivar incidencias técnicas y dar seguimiento transparente al mantenimiento del inmueble.", color: "bg-amber-100 text-amber-800 border-amber-200" },
+                    { content: "Auditar los resultados, medir objetivos de rentabilidad y gestionar la cartera de activos.", color: "bg-amber-100 text-amber-800 border-amber-200" }
+                ],
+                activities: [
+                    { content: "- Configuración del Workspace.\n- Firma de contrato de servicio.\n- Conexión de cuentas vía API.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Importación masiva de unidades.\n- Envío de invitaciones a dueños e inquilinos.\n- Enlace de contratos.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Monitoreo del flujo de caja.\n- Activación de alertas de mora automática.\n- Validación de dispersión.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Recepción del reporte del inquilino.\n- Presupuestación y derivación al técnico.\n- Validación de fin de obra.", color: "bg-sky-100 text-sky-800 border-sky-200" },
+                    { content: "- Revisión del dashboard ejecutivo.\n- Ajustes de comisiones operativas.\n- Campañas de renovación de contratos.", color: "bg-sky-100 text-sky-800 border-sky-200" }
+                ],
+                artifacts: [
+                    { content: "Workspace Setup API, Bank API Connector.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/admin/workspace", logic: "Establece el entorno multi-tenant y conecta la cuenta del administrador para la conciliación bancaria.", db: "admin_workspace.status = 'ACTIVE'" },
+                    { content: "Bulk Property Uploader, Linkage Engine.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/admin/contracts", logic: "Genera la relación jurídica atómica entre Propiedad, Dueño e Inquilino.", db: "contract.property_id = property.id\ncontract.status = 'PENDING_SIGNATURE'" },
+                    { content: "Dispersor Automatizado, Delinquency Monitor.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/admin/payments/split", logic: "Dispara la dispersión de fondos a múltiples cuentas (Dueño, Admin, Seguro) tras recibir el pago del inquilino.", db: "ledger.status = 'SETTLED'\ncommission.earned = computed_fee" },
+                    { content: "Workorder Manager, Repositorio de Presupuestos.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "POST", path: "/api/v1/admin/tickets", logic: "Crea la orden de trabajo para proveedores autorizados y dispara solicitud de autorización al dueño.", db: "ticket.status = 'ASSIGNED'" },
+                    { content: "Analytics & Executive Dashboard, Renovation Trigger.", color: "bg-emerald-100 text-emerald-800 border-emerald-200", method: "GET", path: "/api/v1/admin/dashboard/kpis", logic: "Procesa métricas operativas clave (Mora, Vacancia, Ocupación, LTV) agregando datos agregados.", db: "No altera base de datos (Query Read-Only optimizada)" }
+                ],
+                sensations: [70, 80, 95, 65, 95],
+                opportunities: [
+                    { content: "Procesamiento de facturas y contratos mediante OCR con IA para evitar la carga manual de datos.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Sincronización automatizada bidireccional con portales inmobiliarios para publicar vacantes inmediatamente.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Asistente inteligente por WhatsApp que gestiona cobranza blanda sin consumir tiempo operativo.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Diagnóstico automático de reparaciones mediante análisis de imágenes provistas por el inquilino.", color: "bg-pink-100 text-pink-800 border-pink-200" },
+                    { content: "Ofrecer módulos de franquicia e informes ejecutivos de rendimiento listos para presentar ante inversores.", color: "bg-pink-100 text-pink-800 border-pink-200" }
+                ]
+            }
+        };
+
+        let currentRole = 'tenant';
+        let currentView = 'canvas';
+
+        function switchRole(role) {
+            currentRole = role;
+            
+            // Highlight role button
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+                btn.classList.add('text-slate-600', 'hover:text-slate-900');
+            });
+            const activeBtn = document.getElementById(`btn-${role}`);
+            activeBtn.classList.remove('text-slate-600', 'hover:text-slate-900');
+            activeBtn.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+
+            renderCanvas();
+            renderDevSpec();
+        }
+
+        function switchView(view) {
+            currentView = view;
+            const canvasView = document.getElementById('canvas-view');
+            const devView = document.getElementById('dev-view');
+            const btnCanvas = document.getElementById('btn-view-canvas');
+            const btnDev = document.getElementById('btn-view-dev');
+
+            if (view === 'canvas') {
+                canvasView.classList.remove('hidden');
+                devView.classList.add('hidden');
+                btnCanvas.className = "px-3 py-1.5 rounded-md text-xs font-bold bg-indigo-50 text-indigo-700";
+                btnDev.className = "px-3 py-1.5 rounded-md text-xs font-bold text-slate-600 hover:text-slate-900";
+                setTimeout(drawEmotionLine, 100); // Redraw SVG line after layout switch
+            } else {
+                canvasView.classList.add('hidden');
+                devView.classList.remove('hidden');
+                btnCanvas.className = "px-3 py-1.5 rounded-md text-xs font-bold text-slate-600 hover:text-slate-900";
+                btnDev.className = "px-3 py-1.5 rounded-md text-xs font-bold bg-indigo-50 text-indigo-700";
+            }
+        }
+
+        function openDrawer(index, rowType) {
+            const data = journeyData[currentRole];
+            const stage = data.stages[index];
+            const item = data[rowType][index];
+            
+            const drawer = document.getElementById('drawer');
+            const badge = document.getElementById('drawer-badge');
+            const title = document.getElementById('drawer-title');
+            const desc = document.getElementById('drawer-desc');
+            const logic = document.getElementById('drawer-logic');
+            const method = document.getElementById('drawer-method');
+            const path = document.getElementById('drawer-path');
+            const dbSpec = document.getElementById('drawer-db');
+
+            // Set badge styling by row type
+            badge.innerText = rowType;
+            if (rowType === 'needs') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-amber-100 text-amber-800";
+            else if (rowType === 'activities') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-sky-100 text-sky-800";
+            else if (rowType === 'artifacts') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-emerald-100 text-emerald-800";
+            else if (rowType === 'opportunities') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-pink-100 text-pink-800";
+
+            title.innerText = `${stage.title} - ${stage.subtitle}`;
+            desc.innerText = item.content;
+
+            // Get specifications from artifacts (the technical anchor)
+            const techSpec = data.artifacts[index];
+            logic.innerText = techSpec.logic || "Lógica automatizada del sistema que coordina la acción del usuario en esta etapa.";
+            
+            method.innerText = techSpec.method || "POST";
+            if (techSpec.method === 'GET') method.className = "px-2 py-0.5 rounded text-white font-extrabold bg-blue-500";
+            else if (techSpec.method === 'PATCH') method.className = "px-2 py-0.5 rounded text-white font-extrabold bg-purple-500";
+            else method.className = "px-2 py-0.5 rounded text-white font-extrabold bg-emerald-500";
+            
+            path.innerText = techSpec.path || "/api/v1/default";
+            dbSpec.innerText = techSpec.db || "No altera base de datos directa en este punto.";
+
+            drawer.classList.remove('translate-x-full');
+        }
+
+        function closeDrawer() {
+            document.getElementById('drawer').classList.add('translate-x-full');
+        }
+
+        function renderCanvas() {
+            const data = journeyData[currentRole];
+            
+            // 1. Render Stages Header
+            const stagesHeader = document.getElementById('stages-header');
+            stagesHeader.innerHTML = '';
+            data.stages.forEach(stage => {
+                stagesHeader.innerHTML += `
+                    <div class="bg-indigo-600 text-white rounded-xl p-3 text-center shadow-md">
+                        <span class="block text-xs uppercase font-extrabold tracking-widest text-indigo-200">Etapa ${stage.id}</span>
+                        <h3 class="text-sm font-extrabold truncate">${stage.title}</h3>
+                        <p class="text-[10px] text-indigo-100 truncate">${stage.subtitle}</p>
+                    </div>
+                `;
+            });
+
+            // Helper to generate sticky HTML
+            const makeSticky = (content, index, color, rowType) => {
+                const cleanContent = content.replace(/\n/g, '<br>');
+                return `
+                    <div onclick="openDrawer(${index}, '${rowType}')" class="post-it ${color} border p-4 rounded-xl shadow-sm text-xs font-semibold leading-relaxed cursor-pointer h-28 overflow-y-auto custom-scrollbar flex flex-col justify-between">
+                        <div>${cleanContent}</div>
+                        <span class="text-[9px] uppercase font-bold text-right text-slate-400 block mt-1 hover:underline">Ver Spec 💻</span>
+                    </div>
+                `;
+            };
+
+            // 2. Render Row: Needs
+            const rowNeeds = document.getElementById('row-needs');
+            rowNeeds.innerHTML = '';
+            data.needs.forEach((item, index) => {
+                rowNeeds.innerHTML += makeSticky(item.content, index, item.color, 'needs');
+            });
+
+            // 3. Render Row: Activities
+            const rowActivities = document.getElementById('row-activities');
+            rowActivities.innerHTML = '';
+            data.activities.forEach((item, index) => {
+                rowActivities.innerHTML += makeSticky(item.content, index, item.color, 'activities');
+            });
+
+            // 4. Render Row: Artifacts
+            const rowArtifacts = document.getElementById('row-artifacts');
+            rowArtifacts.innerHTML = '';
+            data.artifacts.forEach((item, index) => {
+                rowArtifacts.innerHTML += makeSticky(item.content, index, item.color, 'artifacts');
+            });
+
+            // 5. Render Row: Opportunities
+            const rowOpportunities = document.getElementById('row-opportunities');
+            rowOpportunities.innerHTML = '';
+            data.opportunities.forEach((item, index) => {
+                rowOpportunities.innerHTML += makeSticky(item.content, index, item.color, 'opportunities');
+            });
+
+            // 6. Draw Emotions / Sensations Points
+            const dotsContainer = document.getElementById('row-sensations-dots');
+            dotsContainer.innerHTML = '';
+            data.sensations.forEach((sensation, index) => {
+                let colorClass = 'bg-emerald-500';
+                let emoji = '🟢';
+                if (sensation < 70) { colorClass = 'bg-amber-500'; emoji = '🟡'; }
+                if (sensation < 60) { colorClass = 'bg-red-500'; emoji = '🔴'; }
+
+                dotsContainer.innerHTML += `
+                    <div class="relative flex flex-col justify-center items-center h-full">
+                        <div class="group cursor-pointer flex flex-col items-center">
+                            <span class="text-lg filter drop-shadow mb-1">${emoji}</span>
+                            <div class="h-3 w-3 rounded-full ${colorClass} border-2 border-white shadow-md transition transform group-hover:scale-125"></div>
+                            <span class="text-[10px] font-extrabold text-slate-500 mt-1">${sensation}%</span>
+                            
+                            <!-- Tooltip -->
+                            <div class="absolute bottom-full mb-2 hidden group-hover:block bg-slate-900 text-white text-[10px] py-1 px-2 rounded shadow-lg pointer-events-none whitespace-nowrap z-30">
+                                Satis.: ${sensation}%
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Timeout to draw connection line on rendered positions
+            setTimeout(drawEmotionLine, 100);
+        }
+
+        function drawEmotionLine() {
+            if (currentView !== 'canvas') return;
+            const container = document.getElementById('row-sensations-dots');
+            const svg = document.getElementById('emotion-line-svg');
+            const line = document.getElementById('emotion-line');
+            const dots = container.querySelectorAll('.group div');
+            
+            if (dots.length < 5) return;
+
+            const containerRect = container.getBoundingClientRect();
+            let points = [];
+
+            dots.forEach(dot => {
+                const rect = dot.getBoundingClientRect();
+                const x = rect.left - containerRect.left + rect.width / 2;
+                const y = rect.top - containerRect.top + rect.height / 2;
+                points.push(`${x},${y}`);
+            });
+
+            line.setAttribute('d', `M ${points.join(' L ')}`);
+        }
+
+        function renderDevSpec() {
+            const data = journeyData[currentRole];
+            const schema = {
+                role: currentRole.toUpperCase(),
+                state_machine: {
+                    states: data.stages.map(s => s.title.toUpperCase().replace(/\s+/g, '_')),
+                    transitions: {
+                        "INITIAL": data.stages[0].title.toUpperCase().replace(/\s+/g, '_')
+                    }
+                },
+                endpoints: data.artifacts.map((art, idx) => ({
+                    stage: data.stages[idx].title,
+                    api: {
+                        method: art.method || "POST",
+                        path: art.path || `/api/v1/${currentRole}/step-${idx + 1}`,
+                        controller_logic: art.logic || "System trigger.",
+                        db_mutations: (art.db || "").split('\n')
+                    }
+                }))
+            };
+
+            document.getElementById('json-code-display').innerText = JSON.stringify(schema, null, 2);
+        }
+
+        // Initialize on Load
+        window.addEventListener('load', () => {
+            renderCanvas();
+            renderDevSpec();
+        });
+        window.addEventListener('resize', drawEmotionLine);
+    </script>
+</body>
+</html>
