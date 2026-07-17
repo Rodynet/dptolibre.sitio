@@ -4,17 +4,44 @@ html, body { margin: 0; background: #f7f9ff; font-family: Inter, system-ui, -app
 .visual-site { position: relative; width: min(100%, 1440px); margin: 0 auto; background: #fff; box-shadow: 0 18px 70px rgba(7,21,64,.10); }
 .visual-site img { display: block; width: 100%; height: auto; }
 
-.hotspot { position: absolute; display: block; border-radius: 4px; }
+.hotspot { position: absolute; display: block; border-radius: 4px; z-index: 20; cursor: pointer; }
 .hotspot:focus { outline: 3px solid rgba(7,87,255,.45); }
 
 /* Menú Superior */
 .top-cta { left: 78.2%; top: 1.2%; width: 17.2%; height: 2.2%; }
-.menu-preguntas { position: absolute; z-index: 20; left: 66%; top: 1.2%; width: 8%; height: 2.2%; }
+.menu-preguntas { left: 66%; top: 1.2%; width: 8%; height: 2.2%; }
 
 /* CTAs de Funnel */
 .hero-cta { left: 5.1%; top: 26.9%; width: 25.5%; height: 2.6%; }
 .benefit-cta { left: 39%; top: 45.2%; width: 21.5%; height: 2.2%; }
 .final-cta { left: 57%; top: 87.2%; width: 23%; height: 2.3%; }
+
+/* Estilo para los párrafos de soporte */
+.support-text {
+    font-size: 0.9rem;
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-left: 2px solid #0066FF;
+    background: #f8fafc;
+    border-radius: 0 8px 8px 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.support-text a {
+    color: #0066FF;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.support-text a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
 
 .seo-content { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
