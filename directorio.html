@@ -52,7 +52,7 @@
                     <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
                     Dev Spec Activada (96% Éxito)
                 </span>
-                <span class="text-xs text-slate-400 font-medium hidden sm:inline">v1.6 Stable</span>
+                <span class="text-xs text-slate-400 font-medium hidden sm:inline">v2.0 Stable</span>
             </div>
         </div>
     </header>
@@ -92,7 +92,7 @@
             <div class="min-w-[1200px] flex flex-col gap-6" id="visual-board">
                 
                 <!-- Encabezados de Etapas (Columnas) -->
-                <div class="grid grid-cols-6 gap-4" id="stages-header">
+                <div class="grid gap-4" id="stages-header">
                     <!-- Fila de Identificación de Fila -->
                     <div class="flex items-center justify-end pr-4">
                         <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest text-right">Etapas / Flujo</span>
@@ -101,7 +101,7 @@
                 </div>
 
                 <!-- Fila: Necesidades -->
-                <div class="grid grid-cols-6 gap-4 align-stretch" id="row-needs">
+                <div class="grid gap-4 align-stretch" id="row-needs">
                     <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
                         <span class="text-xs font-extrabold text-indigo-900 uppercase tracking-wider">Necesidades</span>
                         <p class="text-[10px] text-slate-500 mt-1 leading-normal">Focos de dolor y demandas críticas del usuario.</p>
@@ -110,7 +110,7 @@
                 </div>
 
                 <!-- Fila: Actividades -->
-                <div class="grid grid-cols-6 gap-4 align-stretch" id="row-activities">
+                <div class="grid gap-4 align-stretch" id="row-activities">
                     <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
                         <span class="text-xs font-extrabold text-sky-900 uppercase tracking-wider">Actividades</span>
                         <p class="text-[10px] text-slate-500 mt-1 leading-normal">Operaciones y tareas cotidianas que realiza.</p>
@@ -119,7 +119,7 @@
                 </div>
 
                 <!-- Fila: Artefactos -->
-                <div class="grid grid-cols-6 gap-4 align-stretch" id="row-artifacts">
+                <div class="grid gap-4 align-stretch" id="row-artifacts">
                     <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
                         <span class="text-xs font-extrabold text-emerald-900 uppercase tracking-wider">Artefactos</span>
                         <p class="text-[10px] text-slate-500 mt-1 leading-normal">Componentes de software o integraciones requeridas.</p>
@@ -128,14 +128,14 @@
                 </div>
 
                 <!-- Fila: Sensaciones (Curva Emocional SVG) -->
-                <div class="grid grid-cols-6 gap-4" id="row-sensations">
+                <div class="grid gap-4" id="row-sensations">
                     <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm relative">
                         <span class="text-xs font-extrabold text-rose-900 uppercase tracking-wider">Sensaciones</span>
                         <p class="text-[10px] text-slate-500 mt-1 leading-normal">Curva de humor y fluctuación de satisfacción del actor.</p>
                     </div>
                     
                     <!-- Contenedor del SVG que unifica las celdas de las etapas -->
-                    <div class="col-span-5 relative h-32 bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col justify-between">
+                    <div class="relative h-32 bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col justify-between">
                         <!-- El gráfico SVG que se dibuja de fondo -->
                         <div class="absolute inset-0 z-0 opacity-10">
                             <!-- Grilla de fondo para dar apariencia técnica -->
@@ -153,14 +153,14 @@
                         <svg class="absolute inset-0 z-10 w-full h-full" id="emotions-svg"></svg>
                         
                         <!-- Puntos e indicadores de sensaciones colocados sobre el SVG -->
-                        <div class="grid grid-cols-5 h-full relative z-20" id="sensations-dots-container">
+                        <div class="grid h-full relative z-20" id="sensations-dots-container">
                             <!-- Inyectado dinámicamente -->
                         </div>
                     </div>
                 </div>
 
                 <!-- Fila: Oportunidades -->
-                <div class="grid grid-cols-6 gap-4 align-stretch" id="row-opportunities">
+                <div class="grid gap-4 align-stretch" id="row-opportunities">
                     <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
                         <span class="text-xs font-extrabold text-amber-900 uppercase tracking-wider">Oportunidades</span>
                         <p class="text-[10px] text-slate-500 mt-1 leading-normal">Ideas de negocio e innovaciones potenciales para capturar.</p>
@@ -547,10 +547,42 @@
             },
             admin: {
                 stages: [
-                    { id: 1, title: "Inicialización", subtitle: "Registro y Workspace" },
-                    { id: 2, title: "Suscripción", subtitle: "Asociación de Contratos" },
-                    { id: 3, title: "Servicios", subtitle: "Operación y Mora" },
-                    { id: 4, title: "Negocio", subtitle: "Dashboard de Resultados" }
+                    { 
+                        id: 1, 
+                        title: "Inicialización", 
+                        subtitle: "Registro y Workspace",
+                        links: [
+                            { url: "https://rodynet.github.io/dptolibre.web/alta.v1.html", label: "Web: Alta Administrador" }
+                        ]
+                    },
+                    { 
+                        id: 2, 
+                        title: "Suscripción", 
+                        subtitle: "Asociación de Contratos",
+                        links: [
+                            { url: "https://rodynet.github.io/dptolibre.web/alta.web.propiedad.ia.html", label: "Web: Carga de propiedad" },
+                            { url: "https://rodynet.github.io/dptolibre.web/alta.usuario.propiedad.ai.v4.html", label: "Web: Carga de usuario (prop/inq)" },
+                            { url: "https://rodynet.github.io/dptolibre.web/alta.contrato.v2.html", label: "Web: Carga de Contrato" }
+                        ]
+                    },
+                    { 
+                        id: 3, 
+                        title: "Servicios", 
+                        subtitle: "Operación y Mora",
+                        links: [
+                            { url: "https://rodynet.github.io/dptolibre.web/admin.usuarios.v2.html", label: "Web: Sitio de Usuarios" },
+                            { url: "https://rodynet.github.io/dptolibre.web/admin.propiedades.v1.html", label: "Web: Sitio de Propiedades" },
+                            { url: "https://rodynet.github.io/dptolibre.web/admin.contratos.v1.html", label: "Web: Sitio de Contratos" }
+                        ]
+                    },
+                    { 
+                        id: 4, 
+                        title: "Negocio", 
+                        subtitle: "Dashboard de Resultados",
+                        links: [
+                            { url: "https://github.com/Rodynet/dptolibre.web/blob/main/admin.torre.v1.html", label: "Web: Inicio (Torre)" }
+                        ]
+                    }
                 ],
                 needs: [
                     {
@@ -747,7 +779,29 @@
 
         function renderCanvas() {
             const data = journeyData[currentRole];
-            
+            const stepCount = data.stages.length;
+            const totalCols = stepCount + 1;
+
+            // Optimizar las columnas del CSS Grid de manera dinámica para evitar desajustes visuales
+            const rowIds = ['stages-header', 'row-needs', 'row-activities', 'row-artifacts', 'row-sensations', 'row-opportunities'];
+            rowIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.gridTemplateColumns = `repeat(${totalCols}, minmax(0, 1fr))`;
+                }
+            });
+
+            // Ajustar el span del contenedor de sensaciones (curva SVG)
+            const sensationsContainerParent = document.querySelector('#row-sensations > div:nth-child(2)');
+            if (sensationsContainerParent) {
+                sensationsContainerParent.style.gridColumn = `span ${stepCount} / span ${stepCount}`;
+            }
+
+            const dotsContainer = document.getElementById('sensations-dots-container');
+            if (dotsContainer) {
+                dotsContainer.style.gridTemplateColumns = `repeat(${stepCount}, minmax(0, 1fr))`;
+            }
+
             // Renderizar Etapas Header
             const stagesHeader = document.getElementById('stages-header');
             stagesHeader.innerHTML = `
@@ -755,6 +809,7 @@
                     <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest text-right">Etapas / Flujo</span>
                 </div>
             `;
+            
             data.stages.forEach(stage => {
                 let linksHtml = '';
                 if (stage.links && stage.links.length > 0) {
@@ -815,7 +870,7 @@
 
             const stepCount = data.stages.length;
             const containerWidth = dotsContainer.getBoundingClientRect().width;
-            const containerHeight = 128; // Altura fija de la fila de sensaciones (h-32 = 128px)
+            const containerHeight = 128; // Altura de fila (h-32 = 128px)
             
             let points = [];
             
@@ -824,14 +879,14 @@
                 const colWidth = containerWidth / stepCount;
                 const x = (colWidth * i) + (colWidth / 2);
                 
-                // Mapear el valor de sensación (1 a 10) al eje Y invertido del SVG (0 arriba, containerHeight abajo)
+                // Mapear sensación (1-10) al eje Y invertido
                 const score = data.sensations[i] || 5;
                 const paddingY = 24;
                 const y = containerHeight - paddingY - ((score - 1) / 9) * (containerHeight - 2 * paddingY);
                 
                 points.push({ x, y, score });
 
-                // Inyectar el dot de control y el indicador de texto
+                // Inyectar el indicador flotante
                 dotsContainer.innerHTML += `
                     <div class="h-full flex flex-col justify-end items-center pb-2 relative pointer-events-none">
                         <div class="absolute" style="left: calc(${(100 / stepCount) * i}%); width: ${100 / stepCount}%; top: ${y - 45}px; display: flex; flex-col; align-items: center; justify-content: center;">
