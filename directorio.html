@@ -52,7 +52,7 @@
                     <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
                     Dev Spec Activada (96% Éxito)
                 </span>
-                <span class="text-xs text-slate-400 font-medium hidden sm:inline">v2.0 Stable</span>
+                <span class="text-xs text-slate-400 font-medium hidden sm:inline">v2.1 Stable</span>
             </div>
         </div>
     </header>
@@ -435,9 +435,27 @@
             },
             owner: {
                 stages: [
-                    { id: 1, title: "Onboarding", subtitle: "Acceso y Vinculación" },
-                    { id: 2, title: "Verificación", subtitle: "Validación de Términos" },
-                    { id: 3, title: "Arrendamiento", subtitle: "Cobros y Operaciones" }
+                    { 
+                        id: 1, 
+                        title: "Onboarding", 
+                        subtitle: "Acceso y Vinculación",
+                        links: [
+                            { url: "https://rodynet.github.io/dptolibre.propietario/alta.app.html", label: "App: Alta y Pasaporte" }
+                        ]
+                    },
+                    { 
+                        id: 2, 
+                        title: "Verificación", 
+                        subtitle: "Validación de Términos" 
+                    },
+                    { 
+                        id: 3, 
+                        title: "Arrendamiento", 
+                        subtitle: "Cobros y Operaciones",
+                        links: [
+                            { url: "https://rodynet.github.io/dptolibre.propietario/inicio.app.html", label: "App: Inicio" }
+                        ]
+                    }
                 ],
                 needs: [
                     {
@@ -552,7 +570,8 @@
                         title: "Inicialización", 
                         subtitle: "Registro y Workspace",
                         links: [
-                            { url: "https://rodynet.github.io/dptolibre.web/alta.v1.html", label: "Web: Alta Administrador" }
+                            { url: "https://rodynet.github.io/dptolibre.web/alta.v1.html", label: "Web: Alta Administrador" },
+                            { url: "https://rodynet.github.io/dptolibre.administrador/app.alta.html", label: "App: Alta Administrador" }
                         ]
                     },
                     { 
