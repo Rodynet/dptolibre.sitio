@@ -1,164 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DptoLibre - Customer Journey Canvas</title>
-    <!-- Tailwind CSS para el diseño responsivo -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome para los iconos de las notas adhesivas y la UI -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-        }
-        /* Custom scrollbars para contenedores grandes */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-    </style>
-</head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col">
-
-    <!-- Header de la Aplicación -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 text-white p-2 rounded-xl flex items-center justify-center shadow-md shadow-indigo-100">
-                    <span class="font-black text-xl tracking-tight">dL</span>
-                </div>
-                <div>
-                    <h1 class="text-lg font-extrabold text-slate-900 leading-tight">DptoLibre</h1>
-                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Customer Journey Blueprint</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-100 animate-pulse">
-                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-                    Dev Spec Activada (96% Éxito)
-                </span>
-                <span class="text-xs text-slate-400 font-medium hidden sm:inline">v2.3 Stable</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Contenido Principal -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex flex-col gap-6">
-        
-        <!-- Barra de Control y Selección de Actores -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex flex-wrap gap-2" id="actor-selector">
-                <button onclick="switchActor('tenant')" id="btn-tenant" class="px-5 py-2.5 rounded-xl text-sm font-extrabold transition duration-150 flex items-center gap-2 shadow-sm bg-indigo-600 text-white">
-                    <i class="fa-solid fa-user-astronaut"></i> Inquilino
-                </button>
-                <button onclick="switchActor('owner')" id="btn-owner" class="px-5 py-2.5 rounded-xl text-sm font-extrabold transition duration-150 flex items-center gap-2 shadow-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">
-                    <i class="fa-solid fa-house-user"></i> Propietario / Dueño
-                </button>
-                <button onclick="switchActor('admin')" id="btn-admin" class="px-5 py-2.5 rounded-xl text-sm font-extrabold transition duration-150 flex items-center gap-2 shadow-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">
-                    <i class="fa-solid fa-sliders"></i> Administrador
-                </button>
-            </div>
-            
-            <div class="flex items-center gap-3">
-                <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Visualizar como:</span>
-                <div class="bg-slate-100 p-1 rounded-xl flex gap-1">
-                    <button id="view-visual" onclick="switchView('visual')" class="px-4 py-2 rounded-lg text-xs font-extrabold bg-white text-slate-800 shadow-sm transition duration-150">
-                        <i class="fa-solid fa-chalkboard-user mr-1"></i> Canvas Visual
-                    </button>
-                    <button id="view-tech" onclick="switchView('tech')" class="px-4 py-2 rounded-lg text-xs font-extrabold text-slate-500 hover:text-slate-800 transition duration-150">
-                        <i class="fa-solid fa-code mr-1"></i> Dev Schema (JSON)
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Lienzo del Canvas de Experiencia (Miro-Style) -->
-        <div id="canvas-container" class="bg-slate-100 rounded-3xl p-6 border border-slate-200 shadow-inner overflow-x-auto custom-scrollbar flex-grow min-h-[500px]">
-            <div class="min-w-[1200px] flex flex-col gap-6" id="visual-board">
-                
-                <!-- Encabezados de Etapas (Columnas) -->
-                <div class="grid gap-4" id="stages-header">
-                    <!-- Fila de Identificación de Fila -->
-                    <div class="flex items-center justify-end pr-4">
-                        <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest text-right">Etapas / Flujo</span>
-                    </div>
-                    <!-- Las etapas dinámicas se inyectarán aquí -->
-                </div>
-
-                <!-- Fila: Necesidades -->
-                <div class="grid gap-4 align-stretch" id="row-needs">
-                    <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
-                        <span class="text-xs font-extrabold text-indigo-900 uppercase tracking-wider">Necesidades</span>
-                        <p class="text-[10px] text-slate-500 mt-1 leading-normal">Focos de dolor y demandas críticas del usuario.</p>
-                    </div>
-                    <!-- Tarjetas inyectadas dinámicamente -->
-                </div>
-
-                <!-- Fila: Actividades -->
-                <div class="grid gap-4 align-stretch" id="row-activities">
-                    <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
-                        <span class="text-xs font-extrabold text-sky-900 uppercase tracking-wider">Actividades</span>
-                        <p class="text-[10px] text-slate-500 mt-1 leading-normal">Operaciones y tareas cotidianas que realiza.</p>
-                    </div>
-                    <!-- Tarjetas inyectadas dinámicamente -->
-                </div>
-
-                <!-- Fila: Artefactos -->
-                <div class="grid gap-4 align-stretch" id="row-artifacts">
-                    <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
-                        <span class="text-xs font-extrabold text-emerald-900 uppercase tracking-wider">Artefactos</span>
-                        <p class="text-[10px] text-slate-500 mt-1 leading-normal">Componentes de software o integraciones requeridas.</p>
-                    </div>
-                    <!-- Tarjetas inyectadas dinámicamente -->
-                </div>
-
-                <!-- Fila: Sensaciones (Curva Emocional SVG) -->
-                <div class="grid gap-4" id="row-sensations">
-                    <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm relative">
-                        <span class="text-xs font-extrabold text-rose-900 uppercase tracking-wider">Sensaciones</span>
-                        <p class="text-[10px] text-slate-500 mt-1 leading-normal">Curva de humor y fluctuación de satisfacción del actor.</p>
-                    </div>
-                    
-                    <!-- Contenedor del SVG que unifica las celdas de las etapas -->
-                    <div class="relative h-32 bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col justify-between">
-                        <!-- El gráfico SVG que se dibuja de fondo -->
-                        <div class="absolute inset-0 z-0 opacity-10">
-                            <!-- Grilla de fondo para dar apariencia técnica -->
-                            <svg width="100%" height="100%">
-                                <defs>
-                                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#64748b" stroke-width="0.5"/>
-                                    </pattern>
-                                </defs>
-                                <rect width="100%" height="100%" fill="url(#grid)" />
-                            </svg>
-                        </div>
-                        
-                        <!-- SVG dinámico para dibujar la línea emocional -->
-                        <svg class="absolute inset-0 z-10 w-full h-full" id="emotions-svg"></svg>
-                        
-                        <!-- Puntos e indicadores de sensaciones colocados sobre el SVG -->
-                        <div class="grid h-full relative z-20" id="sensations-dots-container">
-                            <!-- Inyectado dinámicamente -->
-                        </div>
-                    </div>
-                </div>
-
+<!-- ... existing code ... -->
                 <!-- Fila: Oportunidades -->
                 <div class="grid gap-4 align-stretch" id="row-opportunities">
                     <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
@@ -168,933 +8,190 @@
                     <!-- Tarjetas inyectadas dinámicamente -->
                 </div>
 
+                <!-- Fila: Monetización -->
+                <div class="grid gap-4 align-stretch" id="row-monetization">
+                    <div class="bg-white/60 backdrop-blur rounded-2xl p-4 flex flex-col justify-center border border-slate-200/50 shadow-sm">
+                        <span class="text-xs font-extrabold text-purple-900 uppercase tracking-wider">Monetización</span>
+                        <p class="text-[10px] text-slate-500 mt-1 leading-normal">Vías de ingreso, fees, spreads financieros y venta de leads.</p>
+                    </div>
+                    <!-- Tarjetas inyectadas dinámicamente -->
+                </div>
+
             </div>
 
             <!-- Vista de Datos Técnicos (Dev Spec JSON Schema) -->
-            <div id="tech-board" class="hidden h-full flex flex-col gap-4">
-                <div class="bg-slate-900 rounded-2xl p-6 font-mono text-xs text-emerald-400 overflow-y-auto max-h-[600px] border border-slate-800 shadow-2xl custom-scrollbar relative">
-                    <button onclick="copyTechSpec()" class="absolute top-4 right-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-3 py-1.5 rounded-lg border border-slate-700 active:bg-slate-600 transition">
-                        <i class="fa-regular fa-copy mr-1"></i> Copiar Schema JSON
-                    </button>
-                    <pre id="json-spec-view">Generando esquema técnico...</pre>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Side/Bottom Detail Drawer for Post-its Click -->
-    <div id="drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl border-l border-slate-200 transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col">
-        <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-            <div>
-                <span id="drawer-badge" class="text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide"></span>
-                <h3 id="drawer-title" class="text-lg font-extrabold text-slate-900 mt-2">Detalle de Tarjeta</h3>
-            </div>
-            <button onclick="closeDrawer()" class="text-slate-400 hover:text-slate-600 text-xl font-bold p-2 hover:bg-slate-100 rounded-lg">✕</button>
-        </div>
-        <div class="p-6 space-y-6 flex-grow overflow-y-auto custom-scrollbar">
-            <!-- Contenedor del Enlace Interactivo / Prototipo -->
-            <div id="drawer-link-container" class="hidden">
-                <h4 class="text-xs font-extrabold text-indigo-400 uppercase tracking-wider mb-2">Propuestas de Solución Interactiva</h4>
-                <div id="drawer-links-wrapper" class="flex flex-col gap-2"></div>
-            </div>
-            <div>
-                <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Descripción del Hito</h4>
-                <p id="drawer-desc" class="text-sm text-slate-600 leading-relaxed"></p>
-            </div>
-            <div>
-                <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Lógica de Backend Atómica</h4>
-                <div class="bg-slate-900 text-emerald-400 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-slate-800">
-                    <span class="text-indigo-300 font-bold">// Trigger del Negocio</span>
-                    <pre id="drawer-logic" class="mt-1"></pre>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Método API</h4>
-                    <span id="drawer-method" class="text-xs font-extrabold px-2.5 py-1 rounded-md text-white"></span>
-                </div>
-                <div>
-                    <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Endpoint URL</h4>
-                    <span id="drawer-path" class="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-2 py-1 rounded"></span>
-                </div>
-            </div>
-            <div>
-                <h4 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Esquema Base de Datos (SQL/NoSQL)</h4>
-                <div class="bg-slate-900 text-indigo-300 p-4 rounded-xl text-xs font-mono overflow-x-auto border border-slate-800">
-                    <pre id="drawer-db" class="text-emerald-400"></pre>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Overlay para Drawer -->
-    <div id="drawer-overlay" onclick="closeDrawer()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden transition-opacity duration-300 ease-in-out opacity-0"></div>
-
-    <!-- Data Object conteniendo los tres Journeys completos -->
-    <script>
-        const journeyData = {
-            tenant: {
-                stages: [
-                    { 
-                        id: 1, 
-                        title: "Pasaporte", 
-                        subtitle: "Alta e Identidad", 
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.pasaporte/v54.6.html", label: "App: Alta y Pasaporte" },
-                            { url: "https://rodynet.github.io/dptolibre.web/alta.v1.html", label: "Web: Alta de Cuenta" }
-                        ] 
-                    },
-                    { 
-                        id: 2, 
-                        title: "Contrato", 
-                        subtitle: "Garantías y Firma", 
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.pasaporte/v3.html", label: "App: Contrato y Firma" }
-                        ] 
-                    },
-                    { 
-                        id: 3, 
-                        title: "Uso Mensual", 
-                        subtitle: "Operación y Ahorro", 
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.inquilino/v81.html", label: "App: Inicio" }
-                        ] 
-                    },
-                    { id: 4, title: "Fidelización", subtitle: "Millas y Premios" },
-                    { id: 5, title: "Re-ciclo", subtitle: "Renovación o Egreso" }
-                ],
-                needs: [
-                    {
-                        text: "Crear una cuenta ágilmente, validar identidad de manera 100% digital y sin requerir trámites físicos o presenciales.",
-                        desc: "El usuario demanda inmediatez. No quiere acudir a sucursales ni gestionar copias certificadas. El acceso biométrico y la carga unificada son sus prioridades absolutas.",
-                        logic: "FSM.transitionTo(TenantState.PASSPORT_PENDING);\nBiometrics.initializeVerificationFlow();",
-                        method: "POST",
-                        path: "/api/v1/auth/signup",
-                        db: "INSERT INTO tenants (id, email, passport_status) VALUES (uuid_generate_v4(), :email, 'PENDING');"
-                    },
-                    {
-                        text: "Tener acceso a alternativas de garantía líquida, caución o avales accesibles, y firmar el contrato legalmente de forma digital.",
-                        desc: "Las garantías tradicionales son inaccesibles. El usuario necesita un aval financiero embebido en el sistema que pueda contratar en minutos para poder firmar y avanzar.",
-                        logic: "Scoring.evaluateTenantRiskProfile();\nContractEngine.generateElectronicSignatureBundle();",
-                        method: "POST",
-                        path: "/api/v1/contracts/sign",
-                        db: "UPDATE contracts SET signature_status = 'SIGNED_BY_TENANT', signature_timestamp = NOW() WHERE id = :contract_id;"
-                    },
-                    {
-                        text: "Pagar el alquiler fácilmente, reportar de forma transparente incidentes o roturas en la vivienda, y obtener rendimientos por adelantar pagos.",
-                        desc: "El usuario busca centralizar la convivencia con la propiedad. Reportar problemas técnicos por fotos y tener la posibilidad de rentabilizar un pago anticipado (parking de capital) le genera alta confianza.",
-                        logic: "WalletEngine.creditInterestForAdvancePayment();\nTicketSystem.createMaintenanceTicket();",
-                        method: "POST",
-                        path: "/api/v1/tenants/pay-rent",
-                        db: "INSERT INTO payments (id, amount, advance_credit_earned) VALUES (uuid_generate_v4(), :amount, :interest_calculated);"
-                    },
-                    {
-                        text: "Apreciar que los costos mensuales del alquiler acumulan algún tipo de valor patrimonial directo para el futuro.",
-                        desc: "El alquiler se percibe tradicionalmente como 'dinero muerto'. El inquilino necesita un programa de fidelización fuerte que convierta su regularidad en m2 y lo encamine a créditos.",
-                        logic: "MillasEngine.calculateAccruedSquareMeters();\nCreditEngine.checkUnderwritingTiers();",
-                        method: "POST",
-                        path: "/api/v1/loyalty/accrue",
-                        db: "UPDATE loyalty_ledgers SET accumulated_sqm = accumulated_sqm + :sqm_calculated WHERE tenant_id = :tenant_id;"
-                    },
-                    {
-                        text: "Renovar el alquiler vigente de manera simple o transicionar fluidamente hacia un esquema de compra total o reubicación coordinada.",
-                        desc: "Finalizar un contrato genera alta incertidumbre y fricción operativa. El usuario necesita renovar con un par de clics o transicionar a dueño utilizando su capitalización acumulada.",
-                        logic: "FSM.transitionTo(TenantState.RECYCLE);\nContractEngine.initiateProrogationProcess();",
-                        method: "POST",
-                        path: "/api/v1/contracts/renew",
-                        db: "INSERT INTO contracts (id, original_contract_id, renewal_term) VALUES (uuid_generate_v4(), :old_id, 36);"
-                    }
-                ],
-                activities: [
-                    {
-                        text: "Realiza el flujo de validación biométrica facial, carga datos básicos de perfil y recibe o inicia su 'Pasaporte Digital' de inquilino.",
-                        desc: "El inquilino sigue las instrucciones del SDK integrado. Captura su DNI y realiza pruebas de vida. El pasaporte es el certificado que lo habilitará comercialmente.",
-                        logic: "Biometrics.evaluateLivenessCheck();\nPassport.generateScoringCertificate();",
-                        method: "POST",
-                        path: "/api/v1/biometrics/verify",
-                        db: "UPDATE tenants SET identity_verified_at = NOW(), scoring_score = :score WHERE id = :tenant_id;"
-                    },
-                    {
-                        text: "Selecciona el proveedor de seguro de caución, completa datos de ingresos y de su garantía, y firma biométricamente el contrato.",
-                        desc: "Carga recibos de sueldo e invita a co-deudores. Una vez aprobados por el scoring automático, firma el contrato legal a través del sistema OTP o biometría de firma digital.",
-                        logic: "InsuranceConnector.requestCaucionQuota();\nContractEngine.triggerJointGuaranteeInvite();",
-                        method: "POST",
-                        path: "/api/v1/guarantees/apply",
-                        db: "INSERT INTO contract_guarantees (id, contract_id, provider_id, status) VALUES (uuid_generate_v4(), :contract, :provider, 'APPROVED');"
-                    },
-                    {
-                        text: "Efectúa pagos mensuales vía débito o transferencias automáticas, gestiona tickets de arreglos con fotos, y adelanta alquileres ganando intereses.",
-                        desc: "El inquilino usa la pantalla de inicio para monitorear vencimientos, levantar un ticket de reparación del calefactor adjuntando una foto, o pagar 3 meses juntos para resguardarse.",
-                        logic: "Ledger.executeMonthlyBillingSweep();\nTicketSystem.assignToMaintenanceProvider();",
-                        method: "POST",
-                        path: "/api/v1/tickets/create",
-                        db: "INSERT INTO maintenance_tickets (id, contract_id, issue_type, photo_url) VALUES (uuid_generate_v4(), :contract, :type, :photo_url);"
-                    },
-                    {
-                        text: "Monitorea desde la app su acumulado de m2 (millas) canjeando por premios o aplicando a ofertas de créditos personales o hipotecarios.",
-                        desc: "Visualiza su progreso patrimonial en tiempo real. Canjea millas acumuladas por electrodomésticos o equipamiento, y califica para un microcrédito personal embebido de forma directa.",
-                        logic: "LoyaltyStore.processVoucherRedemption();\nUnderwriter.evaluatePersonalLoanEligibility();",
-                        method: "POST",
-                        path: "/api/v1/credit/apply",
-                        db: "INSERT INTO credit_applications (id, tenant_id, product_type, risk_score) VALUES (uuid_generate_v4(), :tenant, 'PERSONAL', :score);"
-                    },
-                    {
-                        text: "Valida el inventario digital de salida mediante fotos en la app, firma prórrogas de renovación o aplica a créditos para mudanza.",
-                        desc: "Compara el estado del inmueble con el del ingreso. Si hay acuerdo mutuo, se firma digitalmente el nuevo contrato o se liquida la fianza sin fricciones administrativas.",
-                        logic: "InventoryEngine.compareCheckInCheckOut();\nDepositRefund.releaseLockedEscrow();",
-                        method: "POST",
-                        path: "/api/v1/contracts/terminate",
-                        db: "UPDATE properties SET occupancy_status = 'VACANT' WHERE id = :property_id;"
-                    }
-                ],
-                artifacts: [
-                    {
-                        text: "Aplicación móvil nativa / Web, SDK de biometría facial integrado, certificado digital del Pasaporte de DptoLibre.",
-                        desc: "Arquitectura frontend optimizada con Tailwind y webviews ágiles. Integración de servicio biométrico externo mediante REST API de baja latencia.",
-                        logic: "PassportService.generateUnifiedPDF();",
-                        method: "GET",
-                        path: "/api/v1/tenants/passport",
-                        db: "SELECT * FROM tenant_passports WHERE tenant_id = :tenant_id;"
-                    },
-                    {
-                        text: "Contrato digital PDF, pasarela de firma digital certificada por blockchain/entidad legal, y cotizador de caución embebido.",
-                        desc: "Módulo generador de contratos HTML-to-PDF que estampa firmas de forma segura. Vinculación nativa con cotizadores de aseguradoras asociadas.",
-                        logic: "PdfGenerator.renderAndSealContract();",
-                        method: "GET",
-                        path: "/api/v1/contracts/{id}/pdf",
-                        db: "SELECT contract_pdf_url FROM contracts WHERE id = :id;"
-                    },
-                    {
-                        text: "Pasarela de pagos integrando API de CBU/CVU para débitos directos, módulo de soporte de tickets, y billetera financiera remunerada.",
-                        desc: "Integración con procesador de pago local para conciliación bancaria instantánea. API de subcuentas virtuales asociadas al usuario.",
-                        logic: "PaymentGateway.initializeDebitSweep();",
-                        method: "POST",
-                        path: "/api/v1/payments/charge",
-                        db: "INSERT INTO ledger_transactions (id, type, amount) VALUES (uuid_generate_v4(), 'DEBIT', :amount);"
-                    },
-                    {
-                        text: "Dashboard interactivo de m2 ganados, catálogo digital de recompensas de red DptoLibre y motor de créditos automáticos.",
-                        desc: "Visualización fluida que simula acumulación física de m2. Sistema de scoring predictivo basado en patrones históricos de pagos recurrentes.",
-                        logic: "LoyaltyEngine.evaluateUserRedeemLimits();",
-                        method: "GET",
-                        path: "/api/v1/loyalty/dashboard",
-                        db: "SELECT * FROM loyalty_ledgers WHERE tenant_id = :tenant_id;"
-                    },
-                    {
-                        text: "Acta de entrega digital, alertas y contratos inteligentes (Smart Contracts) para el cierre o migración de garantías.",
-                        desc: "Automatización de notificaciones con 90 días de anticipación al vencimiento. Sistema de resolución de disputas de depósito en garantía.",
-                        logic: "SmartNotification.triggerRenewalReminders();",
-                        method: "POST",
-                        path: "/api/v1/notifications/send-alert",
-                        db: "INSERT INTO notifications (id, recipient, template) VALUES (uuid_generate_v4(), :recipient, 'RENEWAL');"
-                    }
-                ],
-                sensations: [8, 5, 9, 10, 6], // Escala de humor (1-10) para el SVG dinámico
-                opportunities: [
-                    {
-                        text: "Sincronizar invitaciones inmediatas desde el CRM del administrador para acortar tiempos del alta inicial del pasaporte.",
-                        desc: "Si el administrador carga al inquilino, el sistema le dispara un link directo de WhatsApp. El inquilino solo se valida facialmente y ya tiene el pasaporte pre-cargado.",
-                        logic: "CRMConnector.syncProspectData();",
-                        method: "POST",
-                        path: "/api/v1/crm/import-lead",
-                        db: "INSERT INTO prospects (id, name, imported_from) VALUES (uuid_generate_v4(), :name, 'CRM');"
-                    },
-                    {
-                        text: "Financiar en 3 o 6 cuotas el valor de la prima de caución de manera directa para reducir la barrera financiera de entrada.",
-                        desc: "Aliviar drásticamente el desembolso inicial. Ofrecer un microcrédito para el seguro de caución incrementa la tasa de conversión contractual de inquilinos en un 35%.",
-                        logic: "Financier.evaluateInstallmentPlan();",
-                        method: "POST",
-                        path: "/api/v1/guarantees/finance",
-                        db: "INSERT INTO loan_installments (id, total_amount, installment_count) VALUES (uuid_generate_v4(), :amount, 6);"
-                    },
-                    {
-                        text: "Vincular sistemas de alertas de pago por WhatsApp y habilitar descuentos o puntos extra por pago en días tempranos.",
-                        desc: "El sistema de mensajería interactivo incrementa la cobrabilidad puntual en un 18%. Incentivar con metros cuadrados adicionales por pagar antes del día 5.",
-                        logic: "NotificationHub.sendInteractiveWhatsAppMessage();",
-                        method: "POST",
-                        path: "/api/v1/loyalty/early-bird-reward",
-                        db: "UPDATE loyalty_ledgers SET extra_points = extra_points + 50 WHERE tenant_id = :tenant_id;"
-                    },
-                    {
-                        text: "Consolidar alianzas con constructoras para canjear m2 virtuales de millas por m2 reales en desarrollos de fideicomisos.",
-                        desc: "El valor real de las millas de DptoLibre. El usuario siente que realmente está pagando la cuota parte de su futuro hogar mientras habita el alquiler actual.",
-                        logic: "AllianceAPI.quoteRealEstateAssets();",
-                        method: "GET",
-                        path: "/api/v1/loyalty/partners-catalog",
-                        db: "SELECT * FROM partner_properties WHERE availability_status = 'ACTIVE';"
-                    },
-                    {
-                        text: "Habilitar una pre-aprobación de hipoteca directa para compra de la vivienda en uso, reduciendo costos notariales e intermediarios.",
+<!-- ... existing code ... -->
                         desc: "Si el inquilino decide comprar la propiedad que habita, DptoLibre ya cuenta con todo su historial, lo que le permite estructurar una hipoteca de riesgo mínimo.",
                         logic: "Underwriter.calculateMortgageTerms();",
                         method: "POST",
                         path: "/api/v1/mortgage/pre-approve",
                         db: "INSERT INTO preapproved_mortgages (id, tenant_id, credit_amount) VALUES (uuid_generate_v4(), :tenant, :amount);"
                     }
+                ],
+                monetization: [
+                    {
+                        text: "Markup de Validación (KYC/Reporte).",
+                        desc: "Cobro de fee directo o 'markup' al inquilino por la generación del Pasaporte Digital y la consulta de antecedentes (Infoexperto).",
+                        logic: "Payment.chargeVerificationFee();",
+                        method: "POST",
+                        path: "/api/v1/payments/kyc-fee",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('KYC_FEE', :margin);"
+                    },
+                    {
+                        text: "Comisión por Venta de Pólizas (Caución).",
+                        desc: "Fee de broker/intermediación por cada póliza de seguro de caución de terceros vendida exitosamente e integrada al contrato.",
+                        logic: "Insurance.calculateBrokerageFee();",
+                        method: "POST",
+                        path: "/api/v1/insurance/commission",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('INSURANCE_COM', :commission);"
+                    },
+                    {
+                        text: "Microcréditos y Scoring Data.",
+                        desc: "Intereses por préstamos de monto bajo y plazos cortos (Adelantos) para pagar el alquiler. Además, la data de pagos informales positivos aumenta su score y tiene valor de mercado.",
+                        logic: "Loans.issueMicroLoan();",
+                        method: "POST",
+                        path: "/api/v1/loans/micro",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('LOAN_INTEREST', :interest);"
+                    },
+                    {
+                        text: "Venta de Leads Hipotecarios (CPA).",
+                        desc: "Venta de leads hiper-cualificados a bancos e instituciones financieras para créditos hipotecarios, basados en un Rental Score perfecto validado por años.",
+                        logic: "Leads.sellMortgageLead();",
+                        method: "POST",
+                        path: "/api/v1/leads/mortgage",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('LEAD_CPA', :cpa_value);"
+                    },
+                    {
+                        text: "Financiación de Salida / Mudanza.",
+                        desc: "Cross-selling de servicios logísticos, seguros para el nuevo hogar o adelantos contra el depósito en garantía retenido.",
+                        logic: "Services.sellMovingPackage();",
+                        method: "POST",
+                        path: "/api/v1/services/moving",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('CROSS_SELL', :margin);"
+                    }
                 ]
             },
             owner: {
                 stages: [
-                    { 
-                        id: 1, 
-                        title: "Onboarding", 
-                        subtitle: "Acceso y Vinculación",
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.propietario/alta.app.html", label: "App: Alta y Pasaporte" },
-                            { url: "https://rodynet.github.io/dptolibre.web/alta.v1.html", label: "Web: Alta de Cuenta" }
-                        ]
-                    },
-                    { 
-                        id: 2, 
-                        title: "Verificación", 
-                        subtitle: "Validación de Términos" 
-                    },
-                    { 
-                        id: 3, 
-                        title: "Arrendamiento", 
-                        subtitle: "Cobros y Operaciones",
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.propietario/inicio.app.html", label: "App: Inicio" }
-                        ]
-                    }
-                ],
-                needs: [
-                    {
-                        text: "Registrar su perfil rápidamente y vincular su propiedad bajo cualquiera de las 3 rutas ágiles existentes en el sistema.",
-                        desc: "El propietario exige facilidad. Desea vincular propiedades mediante QR, cargarlas de forma autónoma y delegar, o simplemente aceptar una invitación directa del administrador.",
-                        logic: "PropertyEngine.resolveOnboardingRoute();",
-                        method: "POST",
-                        path: "/api/v1/properties/associate",
-                        db: "INSERT INTO properties (id, owner_id, status) VALUES (uuid_generate_v4(), :owner_id, 'PENDING');"
-                    },
-                    {
-                        text: "Verificar y autorizar los términos comerciales del contrato propuesto y validar el historial crediticio del inquilino seleccionado.",
-                        desc: "Mitigación absoluta de riesgos. El dueño necesita la tranquilidad de saber que el inquilino ha aprobado el pasaporte digital y que las condiciones contractuales están validadas.",
-                        logic: "RiskEngine.calculateTenantMatchingScore();",
-                        method: "POST",
-                        path: "/api/v1/contracts/authorize-owner",
-                        db: "UPDATE contracts SET owner_authorization = TRUE WHERE id = :contract_id;"
-                    },
-                    {
-                        text: "Cobrar puntualmente la renta, obtener beneficios financieros si deja parqueado su capital, y autorizar arreglos con total trazabilidad.",
-                        desc: "Flujo financiero libre de problemas. El dueño recibe pagos en una cuenta de inversión que genera rendimientos inmediatos y decide sobre presupuestos técnicos con un clic.",
-                        logic: "SplitPayment.routeFundsToOwnerAccount();\nYieldEngine.startInvestmentParking();",
-                        method: "POST",
-                        path: "/api/v1/owners/withdraw",
-                        db: "INSERT INTO investment_transactions (id, owner_id, type, amount) VALUES (uuid_generate_v4(), :owner_id, 'YIELD_PAYOUT', :yield);"
-                    }
-                ],
-                activities: [
-                    {
-                        text: "Escanea un QR de la administración, asocia su DNI/Tax ID para vincular automático, o completa el formulario de auto-registro.",
-                        desc: "El propietario ejecuta la acción que más le acomoda de las 3 rutas para poblar la plataforma con sus títulos de propiedad.",
-                        logic: "QRService.decodePropertyToken();",
-                        method: "POST",
-                        path: "/api/v1/qr/decode",
-                        db: "SELECT property_id FROM qr_mappings WHERE qr_token = :token;"
-                    },
-                    {
-                        text: "Firma electrónicamente el contrato validado, contrata opcionalmente seguros adicionales, y revisa el scoring detallado del inquilino.",
-                        desc: "El dueño firma el acuerdo. Audita de manera visual el reporte de solvencia del pasaporte digital de su contraparte contractual.",
-                        logic: "ContractEngine.triggerOwnerDigitalSignature();",
-                        method: "POST",
-                        path: "/api/v1/contracts/{id}/owner-sign",
-                        db: "UPDATE contracts SET signature_owner_status = 'SIGNED' WHERE id = :id;"
-                    },
-                    {
-                        text: "Verifica liquidaciones consolidadas en el dashboard, aprueba presupuestos de mantenimiento y autoriza egresos de fondos.",
-                        desc: "El propietario interactúa de manera regular con la app para revisar facturas de expensas, descontar mantenimientos aprobados y derivar ganancias.",
-                        logic: "Ledger.generateConsolidatedStatement();",
-                        method: "GET",
-                        path: "/api/v1/owners/statements",
-                        db: "SELECT * FROM ledger_statements WHERE owner_id = :owner_id;"
-                    }
-                ],
-                artifacts: [
-                    {
-                        text: "Generador de códigos QR para vinculación, buscador catastral automático y API de delegación de gestión de carteras.",
-                        desc: "Herramienta que geolocaliza y valida la existencia física y legal del inmueble de manera ágil ante bases de datos estatales o registros.",
-                        logic: "CatastroConnector.validatePropertyID();",
-                        method: "GET",
-                        path: "/api/v1/catastro/validate",
-                        db: "SELECT is_valid FROM catastro_records WHERE registro_id = :catastro;"
-                    },
-                    {
-                        text: "Firma legal digital, visualizador interactivo del Score del inquilino y base de datos con cifrado robusto para datos financieros.",
-                        desc: "Seguridad extrema de datos sensibles. El reporte crediticio expone niveles de riesgo consolidados sin filtrar información privada innecesaria.",
-                        logic: "RiskEngine.generateAnonymizedReport();",
-                        method: "GET",
-                        path: "/api/v1/reports/risk/{tenant_id}",
-                        db: "SELECT score, history_rating FROM credit_scores WHERE tenant_id = :tenant_id;"
-                    },
-                    {
-                        text: "Cuenta Remunerada / Billetera de Inversiones, canal directo de cotización técnica de proveedores y API de dispersión de saldos.",
-                        desc: "Módulo Fintech integrado que coloca fondos líquidos en fondos de renta fija (Money Market) autorizados por comisiones reguladoras de valores.",
-                        logic: "MoneyMarket.parkFundsLiquid();",
-                        method: "POST",
-                        path: "/api/v1/fintech/park",
-                        db: "UPDATE investment_wallets SET invested_balance = invested_balance + :amount WHERE owner_id = :owner_id;"
-                    }
-                ],
-                sensations: [6, 8, 9],
-                opportunities: [
-                    {
-                        text: "Ofrecer una precarga automática a dueños cuyos datos coincidan con carteras activas preexistentes en los sistemas catastrales.",
-                        desc: "Enriquecer la base de datos de manera proactiva. Si una administración se asocia, el dueño recibe un mail del sistema indicando que su propiedad ya está lista para monitoreo.",
-                        logic: "CrawlEngine.matchPropertiesByDNI();",
-                        method: "POST",
-                        path: "/api/v1/properties/bulk-match",
-                        db: "UPDATE properties SET match_found = TRUE WHERE dni = :dni;"
-                    },
-                    {
-                        text: "Integrar alertas tempranas de impago en garantías para asegurar el desembolso inmediato al dueño si el inquilino no cubre su mes.",
-                        desc: "El seguro de cobro garantizado. Si para el día 5 el dinero no ha ingresado, el seguro de caución adelanta de forma atómica el depósito al dueño sin retrasos.",
-                        logic: "InsuranceConnector.triggerDefaultProtectionSweep();",
-                        method: "POST",
-                        path: "/api/v1/guarantees/claim-default",
-                        db: "INSERT INTO claims (id, contract_id, claimed_amount) VALUES (uuid_generate_v4(), :contract, :amount);"
-                    },
-                    {
-                        text: "Permitir al dueño reinvertir automáticamente sus alquileres acumulados en la compra fraccionada de nuevas propiedades DptoLibre.",
+<!-- ... existing code ... -->
                         desc: "El volante de reinversión infinita. Transformar los alquileres cobrados en participaciones de crowdfunding de desarrollos constructivos propios.",
                         logic: "Crowdfunding.buyTokensWithRent();",
                         method: "POST",
                         path: "/api/v1/crowdfund/purchase-shares",
                         db: "INSERT INTO asset_shares (id, owner_id, token_amount) VALUES (uuid_generate_v4(), :owner_id, :shares);"
                     }
+                ],
+                monetization: [
+                    {
+                        text: "Data Monetization Catastral.",
+                        desc: "Venta de data agregada sobre zonas de inversión, y generación de leads para aseguradoras de hogar multirriesgo asociadas al alta del inmueble.",
+                        logic: "Data.sellAggregatedStats();",
+                        method: "GET",
+                        path: "/api/v1/data/stats",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('DATA_MONETIZATION', :fee);"
+                    },
+                    {
+                        text: "Premium Scoring & Fast-Track.",
+                        desc: "Cobro por acceso a detalles ultra granulares del reporte crediticio del inquilino o por opciones de firma prioritaria asistida.",
+                        logic: "Premium.unlockDetailedScore();",
+                        method: "POST",
+                        path: "/api/v1/premium/score-reveal",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('PREMIUM_FEATURE', :fee);"
+                    },
+                    {
+                        text: "Float Financiero y Adelantos de Renta.",
+                        desc: "Comisión por diferencial (spread) de intereses al mantener saldos en cuenta rindiendo en el Money Market. Cobro de tasas por otorgarle adelantos de alquileres futuros al dueño.",
+                        logic: "Treasury.calculateFloatSpread();",
+                        method: "POST",
+                        path: "/api/v1/treasury/float",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('FLOAT_SPREAD', :spread);"
+                    }
                 ]
             },
             admin: {
                 stages: [
-                    { 
-                        id: 1, 
-                        title: "Inicialización", 
-                        subtitle: "Registro y Workspace",
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.web/alta.v1.html", label: "Web: Alta Administrador" },
-                            { url: "https://rodynet.github.io/dptolibre.administrador/app.alta.html", label: "App: Alta Administrador" }
-                        ]
-                    },
-                    { 
-                        id: 2, 
-                        title: "Suscripción", 
-                        subtitle: "Asociación de Contratos",
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.web/alta.web.propiedad.ia.html", label: "Web: Carga de propiedad" },
-                            { url: "https://rodynet.github.io/dptolibre.web/alta.usuario.propiedad.ai.v4.html", label: "Web: Carga de usuario (prop/inq)" },
-                            { url: "https://rodynet.github.io/dptolibre.web/alta.contrato.v2.html", label: "Web: Carga de Contrato" }
-                        ]
-                    },
-                    { 
-                        id: 3, 
-                        title: "Servicios", 
-                        subtitle: "Operación y Mora",
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.web/admin.usuarios.v2.html", label: "Web: Sitio de Usuarios" },
-                            { url: "https://rodynet.github.io/dptolibre.web/admin.propiedades.v1.html", label: "Web: Sitio de Propiedades" },
-                            { url: "https://rodynet.github.io/dptolibre.web/alta.contrato.v2.html", label: "Web: Sitio de Contratos" },
-                            { url: "https://rodynet.github.io/dptolibre.web/admin.administracion.html", label: "Web: Administración" }
-                        ]
-                    },
-                    { 
-                        id: 4, 
-                        title: "Negocio", 
-                        subtitle: "Dashboard de Resultados",
-                        links: [
-                            { url: "https://rodynet.github.io/dptolibre.web/admin.torre.v1.html", label: "Web: Inicio (Torre)" },
-                            { url: "https://rodynet.github.io/dptolibre.administrador/app.inicio.html", label: "App: Inicio (SuperApp)" }
-                        ]
-                    }
-                ],
-                needs: [
-                    {
-                        text: "Registrar su inmobiliaria o perfil de administrador de manera fácil y contar con un panel de control configurable.",
-                        desc: "El administrador necesita visibilidad total. Demanda un centro operativo desde el cual gestionar miles de usuarios de forma escalable.",
-                        logic: "Workspace.createTenantPartition();",
-                        method: "POST",
-                        path: "/api/v1/admin/setup-workspace",
-                        db: "INSERT INTO admin_workspaces (id, company_name) VALUES (uuid_generate_v4(), :company_name);"
-                    },
-                    {
-                        text: "Dar de alta propiedades de forma masiva, invitar o asociar dueños, perfilar inquilinos y vincular contratos vigentes.",
-                        desc: "Ingreso masivo de datos sin fricción. Requiere APIs potentes, importación de archivos XLS/CSV y mapeos automatizados con plantillas predefinidas.",
-                        logic: "ImportEngine.validateBulkUploadCSV();",
-                        method: "POST",
-                        path: "/api/v1/admin/bulk-import",
-                        db: "INSERT INTO temp_upload_buffers (raw_data, uploaded_by) VALUES (:raw_csv, :admin_id);"
-                    },
-                    {
-                        text: "Controlar de manera automatizada el pago del alquiler, mitigar y alarmar sobre la mora, y derivar tareas a contratistas de arreglos.",
-                        desc: "El core de la administración. Eliminar llamadas repetitivas. Cobro centralizado de expensas, control riguroso de deudores y derivación de tickets técnicos.",
-                        logic: "DelinquencyEngine.evaluateAgingReport();\nTicketSystem.routeTicketToContractor();",
-                        method: "POST",
-                        path: "/api/v1/admin/mora/sweep",
-                        db: "UPDATE contracts SET status = 'MORA' WHERE rent_due_date < NOW() AND payment_received = FALSE;"
-                    },
-                    {
-                        text: "Verificar la rentabilidad operativa general del negocio y monitorear el cumplimiento de los objetivos comerciales y KPIs.",
-                        desc: "Información gerencial de alto nivel. Gráficos interactivos de ocupación, comisiones acumuladas, proyecciones de cobrabilidad y tasas de abandono.",
-                        logic: "KPIEngine.compileBusinessPerformanceStats();",
-                        method: "GET",
-                        path: "/api/v1/admin/kpis/performance",
-                        db: "SELECT COUNT(*) as active_contracts, SUM(fee_amount) as revenue FROM billing_statements WHERE admin_id = :admin;"
-                    }
-                ],
-                activities: [
-                    {
-                        text: "Crea su cuenta corporativa por app o web, ingresa licencias inmobiliarias vigentes y activa su panel global de control.",
-                        desc: "Completa el onboarding de su negocio para habilitar las pasarelas corporativas y la firma legal de sus agentes.",
-                        logic: "VerificationAPI.auditBrokerLicense();",
-                        method: "POST",
-                        path: "/api/v1/admin/verify-license",
-                        db: "UPDATE admin_workspaces SET license_verified = TRUE WHERE id = :workspace_id;"
-                    },
-                    {
-                        text: "Importa base de datos de propiedades, vincula dueños existentes mediante mails o invitaciones directas, y genera los borradores de contratos.",
-                        desc: "Configura la cartera total. Ejecuta disparadores para notificar automáticamente al inquilino que su borrador de contrato está listo para firmar.",
-                        logic: "ContractBuilder.assembleStandardContractDraft();",
-                        method: "POST",
-                        path: "/api/v1/admin/contracts/create-draft",
-                        db: "INSERT INTO contracts (id, draft_json, created_by) VALUES (uuid_generate_v4(), :draft_payload, :admin_id);"
-                    },
-                    {
-                        text: "Revisa alertas automáticas de mora, gatilla cobros masivos, aprueba cotizaciones de reparaciones y gestiona contratistas.",
-                        desc: "Controla el flujo operativo diario. Centraliza presupuestos técnicos y los deriva al dueño para su confirmación inmediata mediante un clic.",
-                        logic: "NotificationHub.dispatchMoraReminder();",
-                        method: "POST",
-                        path: "/api/v1/admin/mora/notify",
-                        db: "INSERT INTO notifications (id, type, contract_id) VALUES (uuid_generate_v4(), 'MORA_ALERT', :contract_id);"
-                    },
-                    {
-                        text: "Filtra reportes financieros de ganancias, audita tasas de renovación y analiza el rendimiento patrimonial de la cartera de clientes.",
-                        desc: "Revisa el balance consolidado mensual y toma decisiones sobre ampliación de comisiones de seguros y cauciones integradas.",
-                        logic: "AnalyticsEngine.calculateRevenueMoM();",
-                        method: "GET",
-                        path: "/api/v1/admin/reports/consolidated",
-                        db: "SELECT MoM_growth_percentage FROM analytics_reports WHERE workspace_id = :workspace_id;"
-                    }
-                ],
-                artifacts: [
-                    {
-                        text: "Panel administrador Web responsivo, centro de notificaciones push, y pasarela para la habilitación de agentes inmobiliarios.",
-                        desc: "Multi-tenant Dashboard que maneja múltiples roles, aislando información privada de cada consorcio y propiedad bajo altos estándares.",
-                        logic: "WorkspaceSetup.buildTenantSchemaIsolation();",
-                        method: "POST",
-                        path: "/api/v1/admin/roles/assign",
-                        db: "INSERT INTO user_roles (id, user_id, role_type) VALUES (uuid_generate_v4(), :user_id, 'AGENT');"
-                    },
-                    {
-                        text: "Importador masivo CSV/XML, base de datos relacional para relaciones Dueño-Propiedad-Inquilino y motor generador de invitaciones.",
-                        desc: "Servicio ETL que valida estructuras de datos ingresadas para alertar sobre inconsistencias en correos o números de identificación.",
-                        logic: "ETLService.processUploadBuffer();",
-                        method: "POST",
-                        path: "/api/v1/admin/etl/process",
-                        db: "INSERT INTO properties (address) SELECT address FROM temp_upload_buffers WHERE session_id = :session;"
-                    },
-                    {
-                        text: "Consola de control de mora automatizada con Webhooks de pago en vivo, módulo de dispatch de reparaciones y mensajería.",
-                        desc: "Consola en tiempo real con Webhooks que recibe notificaciones de acreditación de la pasarela de pagos para conciliar en segundos.",
-                        logic: "Webhooks.handleAcreditacionNotificación();",
-                        method: "POST",
-                        path: "/api/v1/webhooks/payments",
-                        db: "UPDATE payments SET status = 'COMPLETED' WHERE transaction_id = :transaction_id;"
-                    },
-                    {
-                        text: "Módulo gerencial de visualizaciones con D3.js/Chart.js integrado, exportador de reportes financieros en PDF/XLS y panel de objetivos.",
-                        desc: "Panel avanzado de métricas de rentabilidad por agente, por consorcio y por cartera de inversores asociados.",
-                        logic: "KPICompiler.getMonthlyRevenueReport();",
-                        method: "GET",
-                        path: "/api/v1/admin/reports/download",
-                        db: "SELECT * FROM billing_records WHERE processed_at BETWEEN :start_date AND :end_date;"
-                    }
-                ],
-                sensations: [7, 6, 8, 9],
-                opportunities: [
-                    {
-                        text: "Implementar un bot automatizado que califique la reputación de cada inmobiliaria para otorgarles un 'Badge de Calidad' público.",
-                        desc: "Aumentar la tracción comercial y el reconocimiento público. Atrae a propietarios que buscan calidad administrativa comprobada.",
-                        logic: "BadgesEngine.calculateAdminScore();",
-                        method: "POST",
-                        path: "/api/v1/badges/recalculate",
-                        db: "UPDATE admin_workspaces SET badge_level = 'GOLD' WHERE performance_score > 95;"
-                    },
-                    {
-                        text: "Ofrecer plantillas pre-aprobadas de contratos basadas en contratos de alquiler locales con validez legal garantizada por el Estado.",
-                        desc: "Evitar litigios legales complejos. Las plantillas se actualizan automáticamente según normativas vigentes o decretos estatales.",
-                        logic: "LegalTemplates.getApprovedContractTemplate();",
-                        method: "GET",
-                        path: "/api/v1/legal/templates",
-                        db: "SELECT template_text FROM legal_approved_templates WHERE region = :region AND active = TRUE;"
-                    },
-                    {
-                        text: "Integrar IA de recomendación predictiva que asigne el plomero o gasista mejor puntuado y más cercano al ticket recibido de forma directa.",
-                        desc: "Resolución ultra rápida de incidentes domésticos. Reduce la carga del personal administrativo delegando en un algoritmo predictivo de ubicación.",
-                        logic: "AiDispatcher.findOptimizedContractor();",
-                        method: "POST",
-                        path: "/api/v1/ai/dispatch-provider",
-                        db: "INSERT INTO ticket_allocations (ticket_id, contractor_id) VALUES (:ticket_id, :contractor_id);"
-                    },
-                    {
-                        text: "Habilitar un simulador de proyecciones que estime el impacto financiero real si expanden la cartera en un 10% el próximo mes.",
+<!-- ... existing code ... -->
                         desc: "Herramienta de planeamiento de crecimiento para inmobiliarias. Permite estimar personal necesario y flujo de caja futuro proyectado.",
                         logic: "ForecastEngine.runMonteCarloSimulation();",
                         method: "GET",
                         path: "/api/v1/admin/forecast",
                         db: "SELECT projected_income FROM forecast_models WHERE model_id = :model;"
                     }
+                ],
+                monetization: [
+                    {
+                        text: "SaaS B2B Fee (Suscripción).",
+                        desc: "Cobro mensual fijo o por volumen (tiers) de propiedades activas bajo gestión dentro de la plataforma (Software as a Service).",
+                        logic: "Billing.chargeMonthlySaaS();",
+                        method: "POST",
+                        path: "/api/v1/billing/saas",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('SAAS_SUBSCRIPTION', :fee);"
+                    },
+                    {
+                        text: "Markup de Verificaciones de Inquilinos.",
+                        desc: "Porcentaje de ganancia (spread) sobre el costo base de cada informe de riesgo (Infoexperto) que paga el inquilino al postularse con la inmobiliaria.",
+                        logic: "Billing.calculateReportMarkup();",
+                        method: "POST",
+                        path: "/api/v1/billing/markup",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('REPORT_MARKUP', :spread);"
+                    },
+                    {
+                        text: "Rev-Share en Pólizas y Mora Automatizada.",
+                        desc: "Participación en las comisiones de seguros de caución vendidos a su cartera. Cobro de fee de gestión sobre los punitorios por mora cobrados al inquilino.",
+                        logic: "Billing.splitInsuranceCommission();",
+                        method: "POST",
+                        path: "/api/v1/billing/revshare",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('REV_SHARE', :amount);"
+                    },
+                    {
+                        text: "Rev-Share de Float y Leads de Servicios.",
+                        desc: "Comisión sobre el interés generado por los fondos en clearing de la inmobiliaria. Cobro de fee por referir tickets técnicos a contratistas asociados (Plomeros, etc).",
+                        logic: "Treasury.distributeFloatAdmin();",
+                        method: "POST",
+                        path: "/api/v1/treasury/admin-float",
+                        db: "INSERT INTO revenue (type, amount) VALUES ('ADMIN_FLOAT_SHARE', :amount);"
+                    }
                 ]
             }
         };
 
         let currentRole = 'tenant';
-        let currentView = 'visual';
-
-        window.addEventListener('load', () => {
-            renderCanvas();
-            renderSVG();
-            window.addEventListener('resize', renderSVG);
-        });
-
-        function switchActor(role) {
-            currentRole = role;
-            
-            // Actualizar botones de selector de actor
-            const buttons = ['tenant', 'owner', 'admin'];
-            buttons.forEach(b => {
-                const el = document.getElementById(`btn-${b}`);
-                if (b === role) {
-                    el.className = "px-5 py-2.5 rounded-xl text-sm font-extrabold transition duration-150 flex items-center gap-2 shadow-sm bg-indigo-600 text-white";
-                } else {
-                    el.className = "px-5 py-2.5 rounded-xl text-sm font-extrabold transition duration-150 flex items-center gap-2 shadow-sm bg-white text-slate-600 border border-slate-200 hover:bg-slate-50";
-                }
-            });
-
-            renderCanvas();
-            renderSVG();
-            if (currentView === 'tech') {
-                updateJsonSpec();
-            }
-        }
-
-        function switchView(view) {
-            currentView = view;
-            const btnVisual = document.getElementById('view-visual');
-            const btnTech = document.getElementById('view-tech');
-            const canvasBoard = document.getElementById('canvas-container');
-            const visualBoard = document.getElementById('visual-board');
-            const techBoard = document.getElementById('tech-board');
-
-            if (view === 'visual') {
-                btnVisual.className = "px-4 py-2 rounded-lg text-xs font-extrabold bg-white text-slate-800 shadow-sm transition duration-150";
-                btnTech.className = "px-4 py-2 rounded-lg text-xs font-extrabold text-slate-500 hover:text-slate-800 transition duration-150";
-                visualBoard.classList.remove('hidden');
-                techBoard.classList.add('hidden');
-                setTimeout(renderSVG, 50); // Redibujar SVG tras cambio
-            } else {
-                btnVisual.className = "px-4 py-2 rounded-lg text-xs font-extrabold text-slate-500 hover:text-slate-800 transition duration-150";
-                btnTech.className = "px-4 py-2 rounded-lg text-xs font-extrabold bg-white text-slate-800 shadow-sm transition duration-150";
-                visualBoard.classList.add('hidden');
-                techBoard.classList.remove('hidden');
-                updateJsonSpec();
-            }
-        }
-
+<!-- ... existing code ... -->
         function renderCanvas() {
             const data = journeyData[currentRole];
             const stepCount = data.stages.length;
             const totalCols = stepCount + 1;
 
             // Optimizar las columnas del CSS Grid de manera dinámica para evitar desajustes visuales
-            const rowIds = ['stages-header', 'row-needs', 'row-activities', 'row-artifacts', 'row-sensations', 'row-opportunities'];
+            const rowIds = ['stages-header', 'row-needs', 'row-activities', 'row-artifacts', 'row-sensations', 'row-opportunities', 'row-monetization'];
             rowIds.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.style.gridTemplateColumns = `repeat(${totalCols}, minmax(0, 1fr))`;
                 }
             });
-
-            // Ajustar el span del contenedor de sensaciones (curva SVG)
-            const sensationsContainerParent = document.querySelector('#row-sensations > div:nth-child(2)');
-            if (sensationsContainerParent) {
-                sensationsContainerParent.style.gridColumn = `span ${stepCount} / span ${stepCount}`;
-            }
-
-            const dotsContainer = document.getElementById('sensations-dots-container');
-            if (dotsContainer) {
-                dotsContainer.style.gridTemplateColumns = `repeat(${stepCount}, minmax(0, 1fr))`;
-            }
-
-            // Renderizar Etapas Header
-            const stagesHeader = document.getElementById('stages-header');
-            stagesHeader.innerHTML = `
-                <div class="flex items-center justify-end pr-4">
-                    <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest text-right">Etapas / Flujo</span>
-                </div>
-            `;
-            
-            data.stages.forEach(stage => {
-                let linksHtml = '';
-                if (stage.links && stage.links.length > 0) {
-                    linksHtml = stage.links.map(lnk => `
-                        <a href="${lnk.url}" target="_blank" class="mt-1 inline-flex items-center justify-center gap-1 w-full bg-white/10 hover:bg-white/20 active:bg-white/30 text-white font-extrabold text-[9px] py-1 px-1.5 rounded-md transition duration-150 border border-white/20 shadow-sm" onclick="event.stopPropagation();">
-                            <span>${lnk.label.includes('Web') ? '🌐' : '📱'} ${lnk.label}</span>
-                            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                        </a>
-                    `).join('');
-                }
-                stagesHeader.innerHTML += `
-                    <div class="bg-indigo-600 text-white rounded-xl p-3 text-center shadow-md flex flex-col justify-between items-center min-h-[110px]">
-                        <div class="w-full">
-                            <span class="block text-[9px] uppercase font-extrabold tracking-widest text-indigo-200">Etapa ${stage.id}</span>
-                            <h3 class="text-sm font-extrabold truncate" title="${stage.title}">${stage.title}</h3>
-                            <p class="text-[10px] text-indigo-100 truncate" title="${stage.subtitle}">${stage.subtitle}</p>
-                        </div>
-                        <div class="w-full flex flex-col gap-1">
-                            ${linksHtml}
-                        </div>
-                    </div>
-                `;
-            });
-
-            // Helper para inyectar notas adhesivas
-            const injectRow = (rowId, list, colorClasses, typeName) => {
-                const row = document.getElementById(rowId);
-                // Mantener primera celda descriptiva
-                const firstColHtml = row.children[0].outerHTML;
-                row.innerHTML = firstColHtml;
-
-                list.forEach((item, index) => {
-                    row.innerHTML += `
-                        <div onclick="openDrawer(${index}, '${typeName}')" class="${colorClasses} rounded-2xl p-4 shadow-sm hover:shadow-md cursor-pointer transition transform hover:-translate-y-0.5 duration-150 flex flex-col justify-between border select-none min-h-[140px]">
-                            <p class="text-xs font-semibold leading-relaxed text-slate-800">${item.text}</p>
-                            <div class="mt-3 flex justify-between items-center text-[9px] font-bold text-slate-400">
-                                <span class="bg-white/60 px-1.5 py-0.5 rounded border border-slate-200/50">Módulo ${index + 1}</span>
-                                <span class="hover:text-indigo-600"><i class="fa-solid fa-arrow-up-right-from-square mr-0.5"></i> Ver Spec</span>
-                            </div>
-                        </div>
-                    `;
-                });
-            };
-
-            injectRow('row-needs', data.needs, 'bg-amber-50 hover:bg-amber-100/80 border-amber-200/60', 'needs');
+<!-- ... existing code ... -->
             injectRow('row-activities', data.activities, 'bg-sky-50 hover:bg-sky-100/80 border-sky-200/60', 'activities');
             injectRow('row-artifacts', data.artifacts, 'bg-emerald-50 hover:bg-emerald-100/80 border-emerald-200/60', 'artifacts');
             injectRow('row-opportunities', data.opportunities, 'bg-pink-50 hover:bg-pink-100/80 border-pink-200/60', 'opportunities');
+            injectRow('row-monetization', data.monetization, 'bg-purple-50 hover:bg-purple-100/80 border-purple-200/60', 'monetization');
         }
 
         function renderSVG() {
-            const data = journeyData[currentRole];
-            const svg = document.getElementById('emotions-svg');
-            const dotsContainer = document.getElementById('sensations-dots-container');
-            
-            dotsContainer.innerHTML = '';
-            svg.innerHTML = '';
-
-            const stepCount = data.stages.length;
-            const containerWidth = dotsContainer.getBoundingClientRect().width;
-            const containerHeight = 128; // Altura de fila (h-32 = 128px)
-            
-            let points = [];
-            
-            for (let i = 0; i < stepCount; i++) {
-                // Calcular coordenadas X e Y relativas al SVG
-                const colWidth = containerWidth / stepCount;
-                const x = (colWidth * i) + (colWidth / 2);
-                
-                // Mapear sensación (1-10) al eje Y invertido
-                const score = data.sensations[i] || 5;
-                const paddingY = 24;
-                const y = containerHeight - paddingY - ((score - 1) / 9) * (containerHeight - 2 * paddingY);
-                
-                points.push({ x, y, score });
-
-                // Inyectar el indicador flotante
-                dotsContainer.innerHTML += `
-                    <div class="h-full flex flex-col justify-end items-center pb-2 relative pointer-events-none">
-                        <div class="absolute" style="left: calc(${(100 / stepCount) * i}%); width: ${100 / stepCount}%; top: ${y - 45}px; display: flex; flex-col; align-items: center; justify-content: center;">
-                            <span class="text-[10px] font-black text-slate-500 bg-white border border-slate-200 rounded px-1.5 py-0.5 shadow-sm">
-                                ${score}/10 ${score >= 7 ? '🟢' : score >= 5 ? '🟡' : '🔴'}
-                            </span>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // Construir el path curvo SVG usando bezier sutil
-            let dPath = `M ${points[0].x} ${points[0].y}`;
-            for (let i = 0; i < points.length - 1; i++) {
-                const curr = points[i];
-                const next = points[i+1];
-                const cpX1 = curr.x + (next.x - curr.x) / 3;
-                const cpY1 = curr.y;
-                const cpX2 = curr.x + 2 * (next.x - curr.x) / 3;
-                const cpY2 = next.y;
-                dPath += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${next.x} ${next.y}`;
-            }
-
-            // Agregar sombreado degradado bajo el path
-            let dArea = `${dPath} L ${points[points.length-1].x} ${containerHeight} L ${points[0].x} ${containerHeight} Z`;
-
-            svg.innerHTML = `
-                <defs>
-                    <linearGradient id="emotionGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.2" />
-                        <stop offset="100%" stop-color="#ef4444" stop-opacity="0.0" />
-                    </linearGradient>
-                </defs>
-                <path d="${dArea}" fill="url(#emotionGradient)" />
-                <path d="${dPath}" fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round" />
-            `;
-
-            // Dibujar los círculos/puntos interactivos arriba del path en el SVG
-            points.forEach(pt => {
-                svg.innerHTML += `
-                    <circle cx="${pt.x}" cy="${pt.y}" r="6" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
-                `;
-            });
-        }
-
-        function openDrawer(index, rowType) {
-            const data = journeyData[currentRole];
-            const stage = data.stages[index];
-            const item = data[rowType][index];
-            
-            const drawer = document.getElementById('drawer');
-            const overlay = document.getElementById('drawer-overlay');
-            const badge = document.getElementById('drawer-badge');
-            const title = document.getElementById('drawer-title');
-            const desc = document.getElementById('drawer-desc');
-            const logic = document.getElementById('drawer-logic');
-            const method = document.getElementById('drawer-method');
-            const path = document.getElementById('drawer-path');
-            const dbSpec = document.getElementById('drawer-db');
-
-            const linkContainer = document.getElementById('drawer-link-container');
-            const linksWrapper = document.getElementById('drawer-links-wrapper');
-            
-            if (stage && stage.links && stage.links.length > 0) {
-                linkContainer.classList.remove('hidden');
-                linksWrapper.innerHTML = stage.links.map(lnk => `
-                    <a href="${lnk.url}" target="_blank" class="flex items-center justify-between bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 active:bg-indigo-200 transition duration-150 rounded-xl p-3 text-indigo-900 shadow-sm font-extrabold text-xs">
-                        <span class="flex items-center gap-2">
-                            <span class="text-base">${lnk.label.includes('Web') ? '🌐' : '📱'}</span>
-                            <span>${lnk.label}</span>
-                        </span>
-                        <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                    </a>
-                `).join('');
-            } else {
-                linkContainer.classList.add('hidden');
-                linksWrapper.innerHTML = '';
-            }
-
+<!-- ... existing code ... -->
             // Setear el badge según la fila seleccionada
             badge.innerText = rowType;
             if (rowType === 'needs') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-amber-100 text-amber-800";
             if (rowType === 'activities') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-sky-100 text-sky-800";
             if (rowType === 'artifacts') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-emerald-100 text-emerald-800";
             if (rowType === 'opportunities') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-pink-100 text-pink-800";
+            if (rowType === 'monetization') badge.className = "text-xs font-extrabold uppercase px-2 py-1 rounded tracking-wide bg-purple-100 text-purple-800";
 
             title.innerText = item.text;
-            desc.innerText = item.desc || "Sin descripción adicional detallada para este hito.";
-            logic.innerText = item.logic || "// Sin lógica automatizada declarada.";
-            
-            // Método API y Path
-            if (item.method) {
-                method.innerText = item.method;
-                method.className = `text-xs font-extrabold px-2.5 py-1 rounded-md text-white ${item.method === 'POST' ? 'bg-emerald-600' : 'bg-blue-600'}`;
-            } else {
-                method.innerText = "N/A";
-                method.className = "text-xs font-extrabold px-2.5 py-1 rounded-md text-white bg-slate-400";
-            }
-            path.innerText = item.path || "N/A";
+<!-- ... existing code ... -->
+```
 
-            // Detalle SQL/NoSQL
-            dbSpec.innerText = item.db || "-- No requiere operaciones directas en la DB.";
-
-            // Mostrar el Drawer deslizando
-            drawer.classList.remove('translate-x-full');
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-                overlay.classList.remove('opacity-0');
-            }, 50);
-        }
-
-        function closeDrawer() {
-            const drawer = document.getElementById('drawer');
-            const overlay = document.getElementById('drawer-overlay');
-            
-            drawer.classList.add('translate-x-full');
-            overlay.classList.add('opacity-0');
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 300);
-        }
-
-        function updateJsonSpec() {
-            const jsonView = document.getElementById('json-spec-view');
-            const activeData = journeyData[currentRole];
-            
-            const specSchema = {
-                role: currentRole,
-                state_machine: {
-                    states: activeData.stages.map(s => `ST_${currentRole.toUpperCase()}_${s.title.replace(/\s+/g, '_').toUpperCase()}`),
-                    transitions: activeData.needs.map((n, i) => {
-                        const fromState = i === 0 ? "ST_IDLE" : `ST_${currentRole.toUpperCase()}_${activeData.stages[i-1].title.replace(/\s+/g, '_').toUpperCase()}`;
-                        const toState = `ST_${currentRole.toUpperCase()}_${activeData.stages[i].title.replace(/\s+/g, '_').toUpperCase()}`;
-                        return {
-                            transition_id: `T_${currentRole.toUpperCase()}_0${i+1}`,
-                            from: fromState,
-                            to: toState,
-                            trigger_event: n.path ? n.path.split('/').pop().toUpperCase() : "EVENT"
-                        };
-                    })
-                },
-                endpoints: activeData.needs.map((n, i) => ({
-                    step: i + 1,
-                    description: n.text,
-                    api: {
-                        method: n.method,
-                        path: n.path,
-                        logic_snippet: n.logic,
-                        db_query: n.db
-                    }
-                }))
-            };
-
-            jsonView.innerText = JSON.stringify(specSchema, null, 4);
-        }
-
-        function copyTechSpec() {
-            const jsonView = document.getElementById('json-spec-view');
-            const textToCopy = jsonView.innerText;
-            
-            // Usar el método estándar document.execCommand para evitar problemas de iframe
-            const textarea = document.createElement('textarea');
-            textarea.value = textToCopy;
-            textarea.style.position = 'fixed';
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    // Feedback visual en el botón
-                    const btn = document.querySelector('#tech-board button');
-                    const originalText = btn.innerHTML;
-                    btn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> ¡Copiado!';
-                    btn.classList.replace('bg-slate-800', 'bg-emerald-800');
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.classList.replace('bg-emerald-800', 'bg-slate-800');
-                    }, 2000);
-                }
-            } catch (err) {
-                console.error('Error al copiar al portapapeles:', err);
-            }
-            
-            document.body.removeChild(textarea);
-        }
-    </script>
-</body>
-</html>
+**Resumen de la modificación:**
+1. Se añadió la fila estructural `row-monetization` en el HTML, con tonos morados (`purple`) para diferenciarla de las oportunidades (rosadas/ámbar).
+2. Se inyectó la data de `monetization` (Ingresos, Fees, Leads, Micro-loans, Rendimiento sobre Saldos, Rev-Shares, etc.) en los perfiles `tenant` (5 etapas), `owner` (3 etapas) y `admin` (4 etapas).
+3. Se actualizó el motor de renderizado CSS Grid y el sistema del Drawer (panel lateral) para que soporte el color, el clic y las especificaciones técnicas asociadas a la monetización.
